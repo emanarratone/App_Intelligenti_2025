@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="../css/profile-html-style.css">
+    <link rel="stylesheet" href="../css/modal-confirmation.css">
+    <link rel="icon" href="../images/svg/profile-icon.svg" type="image/svg+xml" style="color: white">
+
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <!--<a href="/dashboard">Home</a>-->
+    <a href="/" id="home-link-profile">Home</a>
+    <a href="#" id="editProfileLink">Modifica dati</a>
+    <a href="/" id="logout-link" >Logout</a>
+</nav>
+
+    <!-- Contenitore del profilo utente -->
+    <div class="container">
+        <!-- Immagine del profilo -->
+
+        <div class="container-fluid" id="banner-container">
+            <div class="mx-0" id="profile-Pic-container">
+                <img src="../images/svg/login-icon.svg"
+                     onerror="this.style.display='none'"
+                     class="profile-icon"
+                     id="profilePic">
+                <!-- Input file nascosto -->
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+            </div>
+        </div>
+
+        <!-- Form con dati dell'utente -->
+        <form id="profileForm">
+            <!-- Username -->
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="Guest" required readonly>
+
+            <!-- Email -->
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="guest@example.com" readonly required>
+
+            <label for="name-label">Name</label>
+            <input type="text" id="name-label" name="name" value="" required readonly>
+
+            <label for="surname-label">Surname</label>
+            <input type="text" id="surname-label" name="surname" value="" required readonly>
+
+
+            <label for="BirthDay-label">Date of birth</label>
+            <input type="date" class="form-control" id="BirthDay-label" required value="" readonly>
+
+            </form>
+    </div>
+
+<div id="loginModalConfirmation" class="custom-modal">
+    <div class="custom-modal-dialog">
+        <div class="custom-modal-content">
+            <span class="close-btn" ></span>
+            <div id="modal-body">
+                <!-- Login form will be injected here -->
+                <!--<div id="button-save-container">
+                     Bottone di Logout
+                    <button type="button" id="logoutBtn">Save</button>
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script type="module" src="../js/ProfilePageController.js"></script>
+</body>
+</html>

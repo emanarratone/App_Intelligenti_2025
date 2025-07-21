@@ -1,0 +1,105 @@
+.container-fluid{
+    background-color: orangered;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 10px; /* Bordi arrotondati */
+}
+.profile-icon {
+    cursor: pointer;
+}
+
+.cart-icon{
+    cursor: pointer;
+}
+
+.btn-outline-success{
+    color: white;
+}
+
+
+.card-footer {
+    padding: 10px;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.card-footer .card-title, .card-footer .card-text {
+    margin: 0;
+}
+
+.card-footer button {
+    float: right;
+}
+
+.card-footer button + button {
+    margin-right: 10px; /* Spazio tra i due pulsanti */
+}
+
+.list-group-item{
+    background-color: orangered;
+}
+
+.profile-icon{
+    cursor: pointer;
+    width: 23px;   /* Imposta la larghezza a 100px */
+    height: 23px;  /* Imposta l'altezza a 100px */
+    object-fit: cover;  /* Fa sì che l'immagine si adatti senza deformarsi */
+    border-radius: 50%;  /* Rende l'immagine rotonda (opzionale) */
+}
+
+.ai-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-align: center;
+    z-index: 1050; /* Assicura che sia sopra gli altri elementi */
+}
+
+.ai-icon {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.ai-icon {
+    display: block;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+
+#ai {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-align: center;
+    z-index: 1050;
+}
+
+.ai-icon {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+/* Popup nascosto inizialmente */
+.ai-popup {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    background-color: #fff8dc;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* Mostra popup su hover */
+#ai:hover .ai-popup {
+    opacity: 1;
+}

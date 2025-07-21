@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>client/js/ProfilePageController.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CartDAO.html">CartDAO</a><ul class='methods'><li data-type='method'><a href="CartDAO.html#.addProductToCart">addProductToCart</a></li><li data-type='method'><a href="CartDAO.html#.decreaseQuantity">decreaseQuantity</a></li><li data-type='method'><a href="CartDAO.html#.getUserCart">getUserCart</a></li><li data-type='method'><a href="CartDAO.html#.getUserCartQuantity">getUserCartQuantity</a></li><li data-type='method'><a href="CartDAO.html#.increaseQuantity">increaseQuantity</a></li><li data-type='method'><a href="CartDAO.html#.removeProductFromCart">removeProductFromCart</a></li></ul></li><li><a href="OrdineDao.html">OrdineDao</a><ul class='methods'><li data-type='method'><a href="OrdineDao.html#.aggiungiOrdine">aggiungiOrdine</a></li><li data-type='method'><a href="OrdineDao.html#.calcolaPagamentoTotaleOrdine">calcolaPagamentoTotaleOrdine</a></li><li data-type='method'><a href="OrdineDao.html#.getUserOrdine">getUserOrdine</a></li></ul></li><li><a href="SpedizoineDAO.html">SpedizoineDAO</a><ul class='methods'><li data-type='method'><a href="SpedizoineDAO.html#.aggiungiSpedizione">aggiungiSpedizione</a></li></ul></li><li><a href="WishlistDAO.html">WishlistDAO</a><ul class='methods'><li data-type='method'><a href="WishlistDAO.html#.addProductToWishlist">addProductToWishlist</a></li><li data-type='method'><a href="WishlistDAO.html#.getUserWishlist">getUserWishlist</a></li><li data-type='method'><a href="WishlistDAO.html#.removeProductFromWishlist">removeProductFromWishlist</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#LocalStrategy">LocalStrategy</a></li><li><a href="global.html#WishListFirtsLog">WishListFirtsLog</a></li><li><a href="global.html#addNewImgManager">addNewImgManager</a></li><li><a href="global.html#addOrdine">addOrdine</a></li><li><a href="global.html#addProductToCart">addProductToCart</a></li><li><a href="global.html#addProfilePic">addProfilePic</a></li><li><a href="global.html#addSpedizione">addSpedizione</a></li><li><a href="global.html#apiRoutes">apiRoutes</a></li><li><a href="global.html#buttonWish">buttonWish</a></li><li><a href="global.html#clickBuyButton">clickBuyButton</a></li><li><a href="global.html#createSuccessHeader">createSuccessHeader</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#effetuaOrdine">effetuaOrdine</a></li><li><a href="global.html#effetuaSpedizione">effetuaSpedizione</a></li><li><a href="global.html#emptyCart">emptyCart</a></li><li><a href="global.html#eventListenersQtyButtons">eventListenersQtyButtons</a></li><li><a href="global.html#fetchProducts">fetchProducts</a></li><li><a href="global.html#filterProducts">filterProducts</a></li><li><a href="global.html#flag">flag</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#getProductsId">getProductsId</a></li><li><a href="global.html#getUserCart">getUserCart</a></li><li><a href="global.html#getUserOrdine">getUserOrdine</a></li><li><a href="global.html#getUsrPfp">getUsrPfp</a></li><li><a href="global.html#getWishedProducts">getWishedProducts</a></li><li><a href="global.html#injectForms">injectForms</a></li><li><a href="global.html#inserisciPagamentoTot">inserisciPagamentoTot</a></li><li><a href="global.html#inserisciPagamentoTotManager">inserisciPagamentoTotManager</a></li><li><a href="global.html#isLoggedIn">isLoggedIn</a></li><li><a href="global.html#loadCart">loadCart</a></li><li><a href="global.html#loadOrdersFromLocalStorage">loadOrdersFromLocalStorage</a></li><li><a href="global.html#loadUserOrdiniPage">loadUserOrdiniPage</a></li><li><a href="global.html#loadUserProfile">loadUserProfile</a></li><li><a href="global.html#loadVirtualCart">loadVirtualCart</a></li><li><a href="global.html#loadWishList">loadWishList</a></li><li><a href="global.html#loadWishlistProducts">loadWishlistProducts</a></li><li><a href="global.html#loginAfterRegistration">loginAfterRegistration</a></li><li><a href="global.html#loginModal">loginModal</a></li><li><a href="global.html#modifyData">modifyData</a></li><li><a href="global.html#passVisibility">passVisibility</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeCartProd">removeCartProd</a></li><li><a href="global.html#svuotaCarrello">svuotaCarrello</a></li><li><a href="global.html#updateCart">updateCart</a></li><li><a href="global.html#updateCartQty">updateCartQty</a></li><li><a href="global.html#updatePaginationControls">updatePaginationControls</a></li><li><a href="global.html#updatePfpMain">updatePfpMain</a></li><li><a href="global.html#updateQuantity">updateQuantity</a></li><li><a href="global.html#updateWishlist">updateWishlist</a></li><li><a href="global.html#validateBirthDay">validateBirthDay</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#writeActiveWishButtonsToDatabase">writeActiveWishButtonsToDatabase</a></li><li><a href="global.html#zoomImage">zoomImage</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">client/js/ProfilePageController.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+import {passwordConfirmation} from "./script/templates/passwordConfirmation.js";
+import {virtualCart} from "./script/cartController.js";
+import {buttonSave} from "./script/templates/buttonSave.js";
+import {loadProducts} from "./script/fetchProducts.js";
+import {virtualOrdini} from "./OrdiniPageController.js";
+import {sessioneScaduta} from "./script/templates/sessioneScaduta.js";
+import {addNewImgManager, getUsrPfp} from "./script/ProfilePageManager.js";
+import {showSuccessToast} from "./script/templates/successLogin.js";
+
+/**
+ * riempe i campi del form con i dati utente ricevuti dalla chiamata backend
+ * @returns {Promise&lt;void>}
+ */
+async function loadUserProfile() {
+    try {
+    const response = await fetch('/api/user')
+    if (response.ok) {
+        const userData = await response.json();
+        document.getElementById('username').value = userData.username;
+        document.getElementById('email').value = userData.email;
+        document.getElementById('name-label').value = userData.Nome;
+        document.getElementById('surname-label').value = userData.Cognome;
+        document.getElementById('BirthDay-label').value = userData.birthDay;
+        const profilePicFetch = await getUsrPfp()
+        if (profilePicFetch.ok) {
+            const pfp = await profilePicFetch.json();
+            if (pfp.profilePic) {
+                document.getElementById('profilePic').src = `data:image/jpeg;base64,${pfp.profilePic}`;
+            } else {
+                console.error("Nessuna immagine trovata per l'utente.");
+            }
+        }else {
+            console.error("Errore richiesta immagine profilo.");
+        }
+    } else {
+        sessioneScaduta();
+        setTimeout(() => {
+            window.location.href = '/';  // Reindirizza dopo 3 secondi
+        }, 3000); // Ritardo di 3 secondi prima del reindirizzamento
+    }
+    } catch (error) {
+        console.error('Errore nel caricamento del profilo utente:', error);
+    }
+}
+
+// Carica i dati utente al caricamento della pagina
+async function initializePage() {
+    await loadUserProfile();
+    addProfilePic();
+}
+
+document.addEventListener('DOMContentLoaded', initializePage);
+
+/**
+ * riporta alla homepage dalla profile page, chiama loadProducts() per caricare la schermata con i prodotti
+ */
+document.getElementById('home-link-profile').addEventListener('click', async (e) => {
+    try {
+        const response = await fetch('/api/products/Home', {
+            method: 'GET'
+        });
+        if (response.ok) {
+            await loadProducts(1, true)
+        } else {
+            console.error('Errore durante il logout');
+        }
+    } catch (error) {
+        console.error('Errore nel logout:', error);
+    }
+})
+
+/**
+ * esegue il logout e svuota le strutture dati di supporto durante una sessione
+ */
+document.getElementById('logout-link').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/users-route/users/logout', {
+            method: 'GET'
+        });
+        if (response.ok) {
+            // Svuota il carrello virtuale e i dati memorizzati
+            virtualOrdini.length = 0;
+            virtualCart.length = 0;  // Svuota l'array in memoria
+            await localStorage.removeItem('wishlist');
+            await localStorage.removeItem('cartProducts');
+            await localStorage.removeItem('homeList');
+            await localStorage.removeItem('virtualOrdini');
+            // Reindirizza alla pagina di guest
+            window.location.href = '/';
+        } else {
+            console.error('Errore durante il logout');
+        }
+    } catch (error) {
+        console.error('Errore nel logout:', error);
+    }
+});
+
+/**
+ * Nella Profile Page eventLIstener per abilitare il click su Modifica Prfilo
+ * @type {boolean} flag per gestire quante volte chiedo la conferma password
+ */
+let flag = false;
+document.getElementById('editProfileLink').addEventListener('click', async function (event) {
+    event.preventDefault(); // Previene azioni di default
+    if (!flag) {
+        // Mostra il modale per mettere la conferma della password
+        const loginForm = passwordConfirmation();
+        const modalBody = document.querySelector("#modal-body");
+        modalBody.innerHTML = loginForm;
+
+
+        const loginModal = document.querySelector("#loginModalConfirmation");
+        loginModal.style.display = "flex"; // Use flex to center content
+
+        // Bottone per chiudere il modale
+        document.getElementById('close-button-confirmation').addEventListener('click', e => {
+            e.preventDefault();
+            loginModal.style.display = "none";
+        });
+
+        /**
+         * Invio della conferma password, chiamata alla /users/getUserPassword per verificare la password
+         */
+        document.getElementById('button-submit-confirmation').addEventListener('click', async e => {
+            e.preventDefault();
+            const password = document.getElementById("password-confirmation").value; // Ensure this ID is correct
+            const username = document.getElementById("username").value;
+            const response = await fetch('/users-route/users/getUserPassword', {
+                method: 'POST',
+                credentials: 'include', // Include cookies for authentication
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }), // Send username and password
+            });
+            const result = await response.json();
+            if (response.ok &amp;&amp; result.success) {
+                // Rende i campi editabili
+                const inputs = document.querySelectorAll('#profileForm input');
+                inputs.forEach(input => {
+                    if (input.id !== 'email') {
+                        input.removeAttribute('readonly');
+                        input.classList.add('editable');
+                    }
+                });
+                // Mostra button Save
+                document.getElementById('profileForm').insertAdjacentHTML('beforeend', buttonSave());
+
+                flag = true; // Flag per non richiedere sempre la conferma password
+                loginModal.style.display = "none";
+            } else {
+                alert("Password verifica fallita riprova. ");
+            }
+            //Si occupa di scrivere i dati nuovi nel db
+            modifyData()
+        });
+    } else {
+        const inputs = document.querySelectorAll('#profileForm input');
+        inputs.forEach(input => {
+            if (input.id !== 'email') {
+                input.removeAttribute('readonly');
+                input.classList.add('editable');
+            }
+        });
+    }
+});
+
+/**
+ * Raccoglie i dati dai campi e scrive i nuovi dati nel db, chiamata /users/modifyData
+ */
+function modifyData() {
+        const saveButton = document.getElementById('SaveBtn');
+        if (saveButton) {
+            saveButton.addEventListener('click', async e => {
+                e.preventDefault();
+                const Newusername = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const Newname = document.getElementById('name-label').value;
+                const Newsurname = document.getElementById('surname-label').value;
+                const Newdob = document.getElementById('BirthDay-label').value;
+                if (!Newusername || !email || !Newname || !Newsurname || !Newdob) {
+                    alert("Tutti i campi devono essere compilati.");
+                    return;
+                }
+
+                try {
+                        const response = await fetch('/users-route/users/modifyData', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                nome: Newname,
+                                cognome: Newsurname,
+                                username: Newusername,
+                                email: email, // Email è un campo unique che serve come identificativo
+                                birthDay: Newdob,
+                            })
+                        });
+                    const result = await response.json();
+                    if (response.ok &amp;&amp; result.success) {
+                        createSuccessHeader("Dati modificati con successo")
+                        console.log("Dati modificati con successo");
+                    } else {
+                        console.error("Errore durante l'aggiornamento:", result.error);
+                    }
+                } catch (error) {
+                    console.error('Errore durante la richiesta:', error);
+                }
+            });
+        } else {
+            console.error("SaveBtn not found in the DOM");
+        }
+}
+
+/**
+ * Se la modifica è andata a buon fine mostra un Header di conferma
+ * @param message
+ */
+function createSuccessHeader(message) {
+    let header = document.getElementById('successHeader');
+
+    if (!header) {
+        // Crea header
+        header = document.createElement('h3');
+        header.id = 'successHeader';
+        header.className = 'text-success';
+        const profileForm = document.getElementById('profileForm');
+        profileForm.insertAdjacentElement('beforebegin', header);
+    }
+
+    // Mostra il messaggio
+    header.textContent = message;
+}
+
+
+/**
+ * aggiorna immagine profilo
+ */
+export function addProfilePic(){
+    const profilePic = document.getElementById('profilePic');
+    const fileInput = document.getElementById('fileInput');
+
+    // Apre il selettore di file al clic sull'immagine del profilo
+    profilePic.addEventListener('click', () => {
+        fileInput.click();
+    });
+    // Gestisce la selezione del file
+    fileInput.addEventListener('change', async (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+            // Verifica che sia un'immagine
+            if (!file.type.startsWith('image/')) {
+                alert('Per favore seleziona un file immagine.');
+                return;
+            }
+
+            // Anteprima immagine (opzionale)
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profilePic.src = e.target.result; // Mostra l'immagine selezionata
+            };
+            reader.readAsDataURL(file);
+
+            // Caricamento immagine sul server
+            const formData = new FormData();
+            formData.append('profilePic', file);
+            try {
+                const response = await addNewImgManager(formData);
+                const result = await response.json();
+                if (response.ok &amp;&amp; result.success) {
+                    createSuccessHeader("Immagine aggiornata con successo.")
+                } else {
+                    alert('Errore durante il caricamento: ' + (result.error || 'Errore sconosciuto'));
+                }
+            } catch (error) {
+                console.error('Errore durante la richiesta:', error);
+                alert('Errore durante il caricamento. Riprova.');
+            }
+        }
+    });
+}
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Sun Dec 01 2024 15:12:22 GMT+0100 (Ora standard dell’Europa centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

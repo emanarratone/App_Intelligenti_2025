@@ -1,0 +1,30 @@
+#span-categorie{
+    color: black;
+}
+
+#span-genere{
+    color: black;
+}
+
+#link-Home{
+    color: black;
+}
+
+#search-form button{
+    color: black;
+    border: red;
+}
+/* Cambio del colore di sfondo al passaggio del mouse */
+#search-form button:hover {
+
+    background-color: orange;
+    /* Cambia anche il colore del testo, se necessario */
+}
+
+#nessun-prodotto{
+   font-size: 17.0px; margin-top: 16px;
+}
+
+#div-categorie{
+    margin-left: 10px;
+}

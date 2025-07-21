@@ -1,0 +1,13 @@
+.position-relative {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(28%);
+    cursor: pointer;
+    height: 20px;
+    width: auto;
+}

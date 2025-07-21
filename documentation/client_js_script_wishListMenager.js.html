@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>client/js/script/wishListMenager.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CartDAO.html">CartDAO</a><ul class='methods'><li data-type='method'><a href="CartDAO.html#.addProductToCart">addProductToCart</a></li><li data-type='method'><a href="CartDAO.html#.decreaseQuantity">decreaseQuantity</a></li><li data-type='method'><a href="CartDAO.html#.getUserCart">getUserCart</a></li><li data-type='method'><a href="CartDAO.html#.getUserCartQuantity">getUserCartQuantity</a></li><li data-type='method'><a href="CartDAO.html#.increaseQuantity">increaseQuantity</a></li><li data-type='method'><a href="CartDAO.html#.removeProductFromCart">removeProductFromCart</a></li></ul></li><li><a href="OrdineDao.html">OrdineDao</a><ul class='methods'><li data-type='method'><a href="OrdineDao.html#.aggiungiOrdine">aggiungiOrdine</a></li><li data-type='method'><a href="OrdineDao.html#.calcolaPagamentoTotaleOrdine">calcolaPagamentoTotaleOrdine</a></li><li data-type='method'><a href="OrdineDao.html#.getUserOrdine">getUserOrdine</a></li></ul></li><li><a href="SpedizoineDAO.html">SpedizoineDAO</a><ul class='methods'><li data-type='method'><a href="SpedizoineDAO.html#.aggiungiSpedizione">aggiungiSpedizione</a></li></ul></li><li><a href="WishlistDAO.html">WishlistDAO</a><ul class='methods'><li data-type='method'><a href="WishlistDAO.html#.addProductToWishlist">addProductToWishlist</a></li><li data-type='method'><a href="WishlistDAO.html#.getUserWishlist">getUserWishlist</a></li><li data-type='method'><a href="WishlistDAO.html#.removeProductFromWishlist">removeProductFromWishlist</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#LocalStrategy">LocalStrategy</a></li><li><a href="global.html#WishListFirtsLog">WishListFirtsLog</a></li><li><a href="global.html#addNewImgManager">addNewImgManager</a></li><li><a href="global.html#addOrdine">addOrdine</a></li><li><a href="global.html#addProductToCart">addProductToCart</a></li><li><a href="global.html#addProfilePic">addProfilePic</a></li><li><a href="global.html#addSpedizione">addSpedizione</a></li><li><a href="global.html#apiRoutes">apiRoutes</a></li><li><a href="global.html#buttonWish">buttonWish</a></li><li><a href="global.html#clickBuyButton">clickBuyButton</a></li><li><a href="global.html#createSuccessHeader">createSuccessHeader</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#effetuaOrdine">effetuaOrdine</a></li><li><a href="global.html#effetuaSpedizione">effetuaSpedizione</a></li><li><a href="global.html#emptyCart">emptyCart</a></li><li><a href="global.html#eventListenersQtyButtons">eventListenersQtyButtons</a></li><li><a href="global.html#fetchProducts">fetchProducts</a></li><li><a href="global.html#filterProducts">filterProducts</a></li><li><a href="global.html#flag">flag</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#getProductsId">getProductsId</a></li><li><a href="global.html#getUserCart">getUserCart</a></li><li><a href="global.html#getUserOrdine">getUserOrdine</a></li><li><a href="global.html#getUsrPfp">getUsrPfp</a></li><li><a href="global.html#getWishedProducts">getWishedProducts</a></li><li><a href="global.html#injectForms">injectForms</a></li><li><a href="global.html#inserisciPagamentoTot">inserisciPagamentoTot</a></li><li><a href="global.html#inserisciPagamentoTotManager">inserisciPagamentoTotManager</a></li><li><a href="global.html#isLoggedIn">isLoggedIn</a></li><li><a href="global.html#loadCart">loadCart</a></li><li><a href="global.html#loadOrdersFromLocalStorage">loadOrdersFromLocalStorage</a></li><li><a href="global.html#loadUserOrdiniPage">loadUserOrdiniPage</a></li><li><a href="global.html#loadUserProfile">loadUserProfile</a></li><li><a href="global.html#loadVirtualCart">loadVirtualCart</a></li><li><a href="global.html#loadWishList">loadWishList</a></li><li><a href="global.html#loadWishlistProducts">loadWishlistProducts</a></li><li><a href="global.html#loginAfterRegistration">loginAfterRegistration</a></li><li><a href="global.html#loginModal">loginModal</a></li><li><a href="global.html#modifyData">modifyData</a></li><li><a href="global.html#passVisibility">passVisibility</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeCartProd">removeCartProd</a></li><li><a href="global.html#svuotaCarrello">svuotaCarrello</a></li><li><a href="global.html#updateCart">updateCart</a></li><li><a href="global.html#updateCartQty">updateCartQty</a></li><li><a href="global.html#updatePaginationControls">updatePaginationControls</a></li><li><a href="global.html#updatePfpMain">updatePfpMain</a></li><li><a href="global.html#updateQuantity">updateQuantity</a></li><li><a href="global.html#updateWishlist">updateWishlist</a></li><li><a href="global.html#validateBirthDay">validateBirthDay</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#writeActiveWishButtonsToDatabase">writeActiveWishButtonsToDatabase</a></li><li><a href="global.html#zoomImage">zoomImage</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">client/js/script/wishListMenager.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+
+/**
+ * prendo dal backend tutti i prodotti wished
+ * @param id
+ * @returns {Promise&lt;any>}
+ */
+export async function getWishedProducts(id) {
+    try {
+        if (!id) {
+            throw new Error("Product ID is undefined");
+        }
+        const response = await fetch( `/api/products/id/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            console.error(`Errore nel caricamento del prodotto con ID ${id}. Status: ${response.status}`);
+            throw new Error(`Errore nel caricamento del prodotto con ID ${id}`);
+        }
+        const data = await response.json()
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error("Error during fetch:", error);
+        throw error;
+    }
+}
+
+/**
+ * id dei prodotti wished
+ * @returns {Promise&lt;*[]>}
+ */
+export async function getProductsId() {
+    const response = await fetch('/api/wishlist', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    });
+
+    let idProdottiDesiderati = [];
+    if (response.ok) {
+        const result = await response.json();
+        const wishlist = result.wishlist;
+        idProdottiDesiderati = wishlist.map(product => product.id_prodotto_desiderato);
+        console.log("ID dei prodotti desiderati:", idProdottiDesiderati);
+    }
+    return idProdottiDesiderati
+}
+
+export async function wishFirstLog(){
+    return await fetch('/api/wishlist', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+}
+
+/**
+ * aggiorna la wishlist con i nuovi prodotti wished
+ * @param productId
+ * @param isActive
+ * @returns {Promise&lt;void>}
+ */
+export async function updateWishlist(productId, isActive) {
+    try {
+        const response = await fetch('/api/wishlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({productId, isActive})
+        });
+
+        if (!response.ok) {
+            throw new Error("Errore nell'aggiornamento della lista desideri");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Sun Dec 01 2024 15:12:22 GMT+0100 (Ora standard dell’Europa centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

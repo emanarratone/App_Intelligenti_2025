@@ -1,0 +1,87 @@
+--preferiti bottone FATTO
+
+--preferiti menu FATTO
+
+--anteprima se clicco l'immaggine FATTO
+
+--implementa le categorie FATTO
+
+--fare la home FATTO
+
+--fare il multipage FORSE
+
+--caricare le immaggini nel db FATTO CON IL PATH IMAGES/JPG
+
+--riscrivere la barra di ricerca e il suo pulsante FATTO
+
+--funzione dao inserimento nuovo utente nel db FATTO
+
+--login tasto submitRegister automatico e chiude il modal FATTO
+
+--login con passport FATTO
+
+--sistema di logout FATTO
+
+--zoomImmagine() dopo il login non funziona FATTO
+
+--gestione sessioni FATTO
+
+--gestione wishlist FATTO
+
+--creazione account FATTO
+
+--qunado utente si registra e ha qualcosa di marcato scrive la tabella lista_desideri nel db FATTO
+
+--se clicco sul bottone acquista aggiunge i prodotti nella tabella carrello FATTO
+
+--quando clicco la modifica dei dati prima di accedere deve rimettere la password FATTO
+
+--il bottone addToCart funziona anche quando torno nella home FATTO
+
+--aggiustato counter che dava rpoblemi nella Home FATTO
+
+--mentre clicco nella Home del profilo non carica più il carrello FATTO
+
+--ho defintivamente aggiustato il bottone wishlist FATTO
+
+--se clicco lista desideri uso array degli id e creo card in base a quello faccio una chiamata su /products/Home/id FATTO
+
+--quando carica il carello si imposta il contatore in base alla quantita FATTO
+
+--aggiungi o togli proddotti dal carello + - FATTO
+
+--controllare il bottone buy come aggiunge i prodotti nel carrello, devo vedere //await clickBuyButton() su fetchProducts.js FATTO
+
+--se utente attivo clicca 2 volte sul prodotto, nel carello no 2 card stesso prodotto ma 1 con qty 2 FATTO
+
+--quando aggiungo prodotto nel carello, deve esserci una notifica FATTO
+
+--quando sono nella pagina 2 non carica carello e wishlist FATTO
+
+--se sono nella seconda pagina non carica le card del carrello, sara un problema si tempistiche di promise FATTO
+
+--quando clicco Home sul Profile.html mi svuota il carello, da aggiustare FATTO
+
+--fare caricamento ordine nel db FATTO
+
+--quando aggiungo proddotto non carica modale ordine, lo fa solo nel login FATTO
+
+--controllo dati quando riempe i campi di registrazione (mail, data compleanno) FATTO
+
+--permettere ad un utente di modificare i propri dati personali FATTO
+
+--riorganizzare il codice in modo più pulito FATTO
+
+--su firefox non funziona il cambia pagina FATTO
+
+--fare bottone del carrello FATTO
+
+--fare una schermata del acquisto FATTO
+
+--fare la cifratura delle pass degli utenti FATTO
+
+-- vedere se si puo mettere un esetitica più bella per il sito FATTO
+
+--alcune parti del codice posso usare il local storage e non fare sempre il fetch dal server FATTO
+
+

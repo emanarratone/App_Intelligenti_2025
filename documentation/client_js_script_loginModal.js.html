@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>client/js/script/loginModal.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CartDAO.html">CartDAO</a><ul class='methods'><li data-type='method'><a href="CartDAO.html#.addProductToCart">addProductToCart</a></li><li data-type='method'><a href="CartDAO.html#.decreaseQuantity">decreaseQuantity</a></li><li data-type='method'><a href="CartDAO.html#.getUserCart">getUserCart</a></li><li data-type='method'><a href="CartDAO.html#.getUserCartQuantity">getUserCartQuantity</a></li><li data-type='method'><a href="CartDAO.html#.increaseQuantity">increaseQuantity</a></li><li data-type='method'><a href="CartDAO.html#.removeProductFromCart">removeProductFromCart</a></li></ul></li><li><a href="OrdineDao.html">OrdineDao</a><ul class='methods'><li data-type='method'><a href="OrdineDao.html#.aggiungiOrdine">aggiungiOrdine</a></li><li data-type='method'><a href="OrdineDao.html#.calcolaPagamentoTotaleOrdine">calcolaPagamentoTotaleOrdine</a></li><li data-type='method'><a href="OrdineDao.html#.getUserOrdine">getUserOrdine</a></li></ul></li><li><a href="SpedizoineDAO.html">SpedizoineDAO</a><ul class='methods'><li data-type='method'><a href="SpedizoineDAO.html#.aggiungiSpedizione">aggiungiSpedizione</a></li></ul></li><li><a href="WishlistDAO.html">WishlistDAO</a><ul class='methods'><li data-type='method'><a href="WishlistDAO.html#.addProductToWishlist">addProductToWishlist</a></li><li data-type='method'><a href="WishlistDAO.html#.getUserWishlist">getUserWishlist</a></li><li data-type='method'><a href="WishlistDAO.html#.removeProductFromWishlist">removeProductFromWishlist</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#LocalStrategy">LocalStrategy</a></li><li><a href="global.html#WishListFirtsLog">WishListFirtsLog</a></li><li><a href="global.html#addNewImgManager">addNewImgManager</a></li><li><a href="global.html#addOrdine">addOrdine</a></li><li><a href="global.html#addProductToCart">addProductToCart</a></li><li><a href="global.html#addProfilePic">addProfilePic</a></li><li><a href="global.html#addSpedizione">addSpedizione</a></li><li><a href="global.html#apiRoutes">apiRoutes</a></li><li><a href="global.html#buttonWish">buttonWish</a></li><li><a href="global.html#clickBuyButton">clickBuyButton</a></li><li><a href="global.html#createSuccessHeader">createSuccessHeader</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#effetuaOrdine">effetuaOrdine</a></li><li><a href="global.html#effetuaSpedizione">effetuaSpedizione</a></li><li><a href="global.html#emptyCart">emptyCart</a></li><li><a href="global.html#eventListenersQtyButtons">eventListenersQtyButtons</a></li><li><a href="global.html#fetchProducts">fetchProducts</a></li><li><a href="global.html#filterProducts">filterProducts</a></li><li><a href="global.html#flag">flag</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#getProductsId">getProductsId</a></li><li><a href="global.html#getUserCart">getUserCart</a></li><li><a href="global.html#getUserOrdine">getUserOrdine</a></li><li><a href="global.html#getUsrPfp">getUsrPfp</a></li><li><a href="global.html#getWishedProducts">getWishedProducts</a></li><li><a href="global.html#injectForms">injectForms</a></li><li><a href="global.html#inserisciPagamentoTot">inserisciPagamentoTot</a></li><li><a href="global.html#inserisciPagamentoTotManager">inserisciPagamentoTotManager</a></li><li><a href="global.html#isLoggedIn">isLoggedIn</a></li><li><a href="global.html#loadCart">loadCart</a></li><li><a href="global.html#loadOrdersFromLocalStorage">loadOrdersFromLocalStorage</a></li><li><a href="global.html#loadUserOrdiniPage">loadUserOrdiniPage</a></li><li><a href="global.html#loadUserProfile">loadUserProfile</a></li><li><a href="global.html#loadVirtualCart">loadVirtualCart</a></li><li><a href="global.html#loadWishList">loadWishList</a></li><li><a href="global.html#loadWishlistProducts">loadWishlistProducts</a></li><li><a href="global.html#loginAfterRegistration">loginAfterRegistration</a></li><li><a href="global.html#loginModal">loginModal</a></li><li><a href="global.html#modifyData">modifyData</a></li><li><a href="global.html#passVisibility">passVisibility</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeCartProd">removeCartProd</a></li><li><a href="global.html#svuotaCarrello">svuotaCarrello</a></li><li><a href="global.html#updateCart">updateCart</a></li><li><a href="global.html#updateCartQty">updateCartQty</a></li><li><a href="global.html#updatePaginationControls">updatePaginationControls</a></li><li><a href="global.html#updatePfpMain">updatePfpMain</a></li><li><a href="global.html#updateQuantity">updateQuantity</a></li><li><a href="global.html#updateWishlist">updateWishlist</a></li><li><a href="global.html#validateBirthDay">validateBirthDay</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#writeActiveWishButtonsToDatabase">writeActiveWishButtonsToDatabase</a></li><li><a href="global.html#zoomImage">zoomImage</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">client/js/script/loginModal.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+import { createRegistrationForm } from "./templates/register.js";
+import { createLoginForm } from "./templates/login.js";
+import { showSuccessToast } from "./templates/successLogin.js";
+import { errorLogin, showErrorNotification } from "./templates/errorLogin.js";
+import { register } from "./Registration.js";
+import {WishListFirtsLog} from "./buttonWish.js";
+import {loadVirtualCart} from "./cartController.js";
+import {loadUserOrdiniPage} from "../OrdiniPageController.js";
+import {getUsrPfp} from "./ProfilePageManager.js";
+
+
+/**
+ * Carica il modale del login
+ */
+export function loginModal() {
+
+    const login_form = createLoginForm();
+    const modalBody = document.querySelector("#modal-body");
+    modalBody.innerHTML = login_form;
+    const loginModal = new bootstrap.Modal(document.querySelector("#loginModal"));
+    loginModal.show();
+    passVisibility()
+    // Gestire l'evento di submit del modulo
+    const loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Previene l'invio del modulo
+
+        // Ottieni email e password
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Disabilita il pulsante di submit per prevenire invii multipli
+        const submitButton = loginForm.querySelector("button[type='submit']");
+        submitButton.disabled = true;
+        submitButton.textContent = "Login in corso...";
+
+        try {
+            const response = await fetch('/users-route/users/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok &amp;&amp; result.success) {
+                // Login avvenuto con successo
+                showSuccessToast("Login avvenuto con successo");
+                loginModal.hide();
+                await WishListFirtsLog();
+                localStorage.removeItem('cartProducts');
+                await loadVirtualCart();
+                await loadUserOrdiniPage();
+                const userLabel = document.getElementById("label-nome-utente");
+                userLabel.textContent = username;
+                await updatePfpMain()
+                loginForm.reset();
+            } else {
+                // Mostra un errore se le credenziali sono sbagliate
+                showErrorNotification(result.error || "Errore durante il login");
+            }
+        } catch (error) {
+            console.error('Errore durante la richiesta di login:', error);
+            showErrorNotification("Errore del server durante il login");
+        } finally {
+            // Riattiva il pulsante di submit
+            submitButton.disabled = false;
+            submitButton.textContent = "Accedi";
+        }
+    });
+
+    //Se clicca il bottone per la registrazione
+    const registerButton = document.getElementById("registerButton");
+    if (registerButton) {
+        registerButton.addEventListener("click", () => {
+            modalBody.innerHTML = createRegistrationForm();
+            register(); // Funzione per gestire la registrazione
+        });
+    }
+}
+
+/**
+ * Mostra la password durante il login se cliccato
+ */
+function passVisibility(){
+    document.getElementById('toggle-password').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.src = type === 'password' ? '../../../images/svg/eyeUp.svg' : '../../../images/svg/eyeDown.svg';
+    });
+}
+
+/**
+ * aggiorna la pfp nella pagina main
+ * @returns {Promise&lt;void>}
+ */
+export async function updatePfpMain(){
+    const profile_pic = document.querySelector(".profile-icon");
+    const profilePicFetch = await getUsrPfp()
+    if (profilePicFetch.ok) {
+        const pfp = await profilePicFetch.json();
+        if (pfp.profilePic) {
+            profile_pic.src = `data:image/jpeg;base64,${pfp.profilePic}`;
+        } else {
+            console.error("Nessuna immagine trovata per l'utente.");
+        }
+    }else {
+        console.error("Errore richiesta immagine profilo.");
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Sun Dec 01 2024 15:12:22 GMT+0100 (Ora standard dell’Europa centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

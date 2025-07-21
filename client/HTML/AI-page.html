@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../images/svg/AI.svg">
+    <title>Chat con AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f4e3;
+            padding-top: 50px;
+        }
+
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        #response-box {
+            margin-top: 20px;
+            background-color: #eaf5ff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            min-height: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <h4 class="text-center mb-4">Interagisci con Miku AI</h4>
+
+    <div class="mb-3">
+        <label for="userInput" class="form-label">Scrivi qualcosa:</label>
+        <input type="text" class="form-control" id="userInput" placeholder="Cosa vuoi sapere?">
+    </div>
+    <button id="sendButton" class="btn w-100" style="background-color: orangered; border-color: orangered; color: white;">
+    Invia
+</button>
+
+
+    <div id="response-box" class="mt-4">
+        <em>La risposta dell'AI apparirà qui.</em>
+    </div>
+</div>
+
+<!-- JS demo per risposta finta -->
+<script type="module" src="../js/AI-controller.js"></script>
+</body>
+</html>

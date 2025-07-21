@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: darkred;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.container {
+    padding: 20px;
+}
+
+.order-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.order-table th, .order-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.order-table th {
+    background-color: coral;
+    color: white;
+}
+
+.order-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-form input, .order-form select, .order-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.order-form button {
+    background-color: darkorange;
+    color: white;
+    cursor: pointer;
+}
+
+.order-form button:hover {
+    background-color: darkorange;
+}
+
+body {
+    background-image: url('../videos/gif/7Hrr.gif'); /* Update with the correct path */
+    background-size: cover;  /* Scale to cover the whole page */
+    background-position: center;  /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    background-attachment: fixed; /* Keeps the background fixed on scroll */
+}
+
+
+#home-link-ordini{
+    color: black;
+}

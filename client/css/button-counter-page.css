@@ -1,0 +1,19 @@
+#prev-page, #next-page {
+    position: relative;
+    margin-bottom: 20px;
+    color: brown;
+    border-color: chocolate;
+    background-color: transparent; /* Colore di sfondo predefinito */
+    transition: background-color 0.3s ease; /* Aggiunge una transizione morbida */
+}
+
+/* Cambia il colore di sfondo al passaggio del mouse */
+#prev-page:hover, #next-page:hover {
+    background-color: wheat;
+    color: brown;
+}
+
+
+#page-info {
+    margin-top: 6px;
+}
