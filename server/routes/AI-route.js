@@ -3,7 +3,7 @@ const { exec } = require('child_process');
 
 const router = express.Router();
 const path = require('path');
-const llmPath = path.resolve(__dirname, '../AI/llm.py'); // Adatta il path se serve
+const llmPath = path.resolve(__dirname, '../AI/llm.py'); 
 
 router.post('/llm', (req, res) => {
     const prompt = req.body.prompt;
