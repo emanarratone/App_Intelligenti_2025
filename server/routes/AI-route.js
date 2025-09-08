@@ -3,7 +3,8 @@ const { exec } = require('child_process');
 
 const router = express.Router();
 const path = require('path');
-const llmPath = path.resolve(__dirname, '../AI/llm.py'); 
+const llmPath = path.resolve(__dirname, '../AI/llm.py');
+const venvPython = path.resolve(__dirname, '../../venv/bin/python');
 
 router.post('/llm', (req, res) => {
     const prompt = req.body.prompt;
@@ -12,10 +13,14 @@ router.post('/llm', (req, res) => {
         return res.status(400).json({ error: 'Prompt mancante' });
     }
 
-    exec(`python3 "${llmPath}" ${JSON.stringify(prompt)}`, (error, stdout, stderr) => {
+    // Usa l'ambiente virtuale Python per eseguire lo script
+    const command = `"${venvPython}" "${llmPath}" ${JSON.stringify(prompt)}`;
+    
+    exec(command, { timeout: 30000 }, (error, stdout, stderr) => {
         if (error) {
             console.error(`Errore esecuzione: ${error.message}`);
-            return res.status(500).json({ error: 'Errore esecuzione Python' });
+            console.error(`stderr: ${stderr}`);
+            return res.status(500).json({ error: 'Errore esecuzione Python', details: stderr });
         }
 
         res.json({ risposta: stdout.trim() });
