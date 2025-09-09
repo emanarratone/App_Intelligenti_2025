@@ -14,7 +14,8 @@ const UserDAO = require('./server/database/users-dao.js');
 const app = express()
 const port = 3300
 app.use(morgan('tiny'));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })); // Aumentato limite per immagini
+app.use(express.urlencoded({ limit: '10mb', extended: true })); // Anche per form data
 app.use(express.static(path.join(__dirname,'client')));
 
 

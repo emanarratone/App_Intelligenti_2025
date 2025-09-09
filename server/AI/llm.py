@@ -2,6 +2,8 @@ import sys
 import requests
 import json
 import os
+import argparse
+import base64
 from pathlib import Path
 
 def get_api_key():
@@ -43,7 +45,8 @@ def consiglia_con_copilot(prompt):
         Il tuo compito è aiutare i clienti a trovare i prodotti giusti, fornire consigli di stile personalizzati e suggerimenti di outfit.
         Rispondi sempre in italiano in modo amichevole e professionale. Mantieni le risposte concise ma utili.
         IMPORTANTE: Devi rispondere SOLO a domande relative a moda, abbigliamento, accessori, stili e shopping. 
-        Se ti viene chiesto qualsiasi altra cosa, rispondi che puoi aiutare solo con consigli di moda e abbigliamento."""
+        Se ti viene chiesto qualsiasi altra cosa, rispondi che puoi aiutare solo con consigli di moda e abbigliamento.
+        IMPORTANTE: Non utilizzare MAI formato Markdown, asterischi, grassetto, corsivo o altri simboli di formattazione. Scrivi solo testo naturale semplice."""
         
         data = {
             "model": "gpt-3.5-turbo",
@@ -90,7 +93,7 @@ def try_github_models(prompt, api_key):
             "messages": [
                 {
                     "role": "system",
-                    "content": "Sei Miku AI, assistente shopping per abbigliamento. Rispondi in italiano. Rispondi SOLO a domande di moda, abbigliamento e shopping. Per altri argomenti, rifiuta educatamente."
+                    "content": "Sei Miku AI, assistente shopping per abbigliamento. Rispondi in italiano. Rispondi SOLO a domande di moda, abbigliamento e shopping. Per altri argomenti, rifiuta educatamente. IMPORTANTE: Non utilizzare MAI formato Markdown, asterischi, grassetto, corsivo o altri simboli di formattazione. Scrivi solo testo naturale semplice."
                 },
                 {
                     "role": "user",
@@ -113,44 +116,7 @@ def try_github_models(prompt, api_key):
     
     return None
 
-def consiglia_con_openai_compatible(prompt):
-    """Alternativa usando OpenAI API direttamente (se disponibile)"""
-    try:
-        api_key = os.getenv('OPENAI_API_KEY')
-        if not api_key:
-            return None
-        
-        url = "https://api.openai.com/v1/chat/completions"
-        
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
-        
-        data = {
-            "model": "gpt-3.5-turbo",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "Sei Miku AI, assistente shopping per abbigliamento. Rispondi in italiano. Rispondi SOLO a domande di moda, abbigliamento e shopping. Per altri argomenti, rifiuta educatamente."
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            "max_tokens": 800,
-            "temperature": 0.7
-        }
-        
-        response = requests.post(url, headers=headers, json=data, timeout=30)
-        
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content'].strip()
-        
-    except Exception:
-        return None
+
 
 def consiglia_fallback(prompt):
     """Fallback alla simulazione se nessuna API è disponibile"""
@@ -282,8 +248,19 @@ def is_fashion_related(text):
     # Se non ci sono indicatori off-topic e c'è almeno 1 parola di moda, accetta
     return fashion_count >= 1
 
-def consiglia(prompt):
+def consiglia(prompt, image_data=None):
     """Funzione principale che prova diverse API in ordine di priorità"""
+    
+    # Se c'è un'immagine, usa i modelli vision
+    if image_data:
+        api_key = get_api_key()
+        if api_key:
+            result = consiglia_con_immagine(prompt, image_data, api_key)
+            if result:
+                return result
+        
+        # Se non funziona con immagine, ritorna messaggio di errore
+        return "Mi dispiace, al momento non riesco ad analizzare immagini. Prova a descrivermi il capo di abbigliamento a parole!"
     
     # Prima controlla se la domanda stessa è relativa alla moda
     if not is_fashion_related(prompt):
@@ -297,18 +274,77 @@ def consiglia(prompt):
     except Exception:
         pass
     
-    # 2. Prova OpenAI diretto
-    try:
-        result = consiglia_con_openai_compatible(prompt)
-        if result:
-            return result
-    except Exception:
-        pass
-    
-    # 3. Fallback alla simulazione intelligente
+    # 2. Fallback alla simulazione intelligente
     return consiglia_fallback(prompt)
 
+def consiglia_con_immagine(prompt, image_base64, api_key):
+    """Usa GPT-4 Vision per analizzare immagini di abbigliamento"""
+    try:
+        # GitHub Models API con GPT-4 Vision
+        url = "https://models.inference.ai.azure.com/chat/completions"
+        
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        # Costruisci il messaggio con immagine
+        messages = [
+            {
+                "role": "system",
+                "content": "Sei Miku AI, assistente shopping per abbigliamento. Analizza l'immagine e dai consigli di moda in italiano. Rispondi SOLO a domande di moda, abbigliamento e shopping. IMPORTANTE: Non utilizzare MAI formato Markdown, asterischi, grassetto, corsivo o altri simboli di formattazione. Scrivi solo testo naturale semplice."
+            }
+        ]
+        
+        # Aggiungi il messaggio utente con immagine
+        user_content = []
+        if prompt:
+            user_content.append({
+                "type": "text",
+                "text": prompt
+            })
+        else:
+            user_content.append({
+                "type": "text", 
+                "text": "Analizza questo capo di abbigliamento e dammi consigli di stile. Come posso abbinarlo?"
+            })
+            
+        user_content.append({
+            "type": "image_url",
+            "image_url": {
+                "url": f"data:image/jpeg;base64,{image_base64}"
+            }
+        })
+        
+        messages.append({
+            "role": "user",
+            "content": user_content
+        })
+        
+        data = {
+            "model": "gpt-4o",  # Modello che supporta vision
+            "messages": messages,
+            "max_tokens": 800,
+            "temperature": 0.7
+        }
+        
+        response = requests.post(url, headers=headers, json=data, timeout=60)
+        
+        if response.status_code == 200:
+            result = response.json()
+            return result['choices'][0]['message']['content'].strip()
+        else:
+            return None
+            
+    except Exception as e:
+        return None
+
 if __name__ == "__main__":
-    prompt = sys.argv[1]
-    risposta = consiglia(prompt)
+    parser = argparse.ArgumentParser(description='Miku AI Assistant')
+    parser.add_argument('prompt', help='Il prompt di input')
+    parser.add_argument('--image', help='Immagine in base64', default=None)
+    
+    args = parser.parse_args()
+    
+    risposta = consiglia(args.prompt, args.image)
     print(risposta)

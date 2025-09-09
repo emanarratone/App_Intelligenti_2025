@@ -27,6 +27,24 @@
             border-radius: 8px;
             min-height: 60px;
         }
+
+        #imagePreview {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
     </style>
 </head>
 <body>
@@ -38,9 +56,25 @@
         <label for="userInput" class="form-label">Scrivi qualcosa:</label>
         <input type="text" class="form-control" id="userInput" placeholder="Cosa vuoi sapere?">
     </div>
-    <button id="sendButton" class="btn w-100" style="background-color: orangered; border-color: orangered; color: white;">
-    Invia
-</button>
+    
+    <!-- Input per caricare immagini (nascosto) -->
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    
+    <!-- Container per i bottoni affiancati -->
+    <div class="d-flex gap-2 mb-3">
+        <button id="imgButton" class="btn flex-fill" style="background-color: #6c757d; border-color: #6c757d; color: white;">
+            Carica Immagine
+        </button>
+        <button id="sendButton" class="btn flex-fill" style="background-color: orangered; border-color: orangered; color: white;">
+            Invia
+        </button>
+    </div>
+    
+    <!-- Preview dell'immagine caricata -->
+    <div id="imagePreview" class="mb-3" style="display: none;">
+        <img id="previewImg" src="" alt="Anteprima" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
+        <button id="removeImage" class="btn btn-sm btn-danger mt-2">Rimuovi Immagine</button>
+    </div>
 
 
     <div id="response-box" class="mt-4">
