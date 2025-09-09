@@ -7,7 +7,7 @@ export async function writeAnswerAgent(input) {
                 'Content-Type': 'application/json'
             },
             credentials: 'include',
-            body: JSON.stringify({ prompt: input }) // <--- correggi qui
+            body: JSON.stringify({ prompt: input }) 
         });
 
         if (response.ok) {
