@@ -193,61 +193,6 @@ def consiglia_fallback(prompt):
     # 4. Risposta di default migliorata
     return f"Interessante! Per '{prompt}' ti consiglio di pensare al tuo stile personale. Preferisci look casual, eleganti o qualcosa nel mezzo? Così posso aiutarti meglio!"
 
-def is_fashion_related(text):
-    """Controlla se il testo è relativo alla moda e abbigliamento"""
-    fashion_keywords = [
-        # Capi di abbigliamento
-        'abbigliamento', 'vestito', 'vestiti', 'jeans', 'pantaloni', 'gonna', 'maglietta', 'camicia',
-        'felpa', 'maglione', 'giacca', 'cappotto', 'blazer', 'cardigan', 'polo', 'canotta',
-        'shorts', 'leggings', 'tuta', 'pigiama', 'intimo', 'reggiseno', 'mutande',
-        
-        # Scarpe e accessori
-        'scarpe', 'sneakers', 'boots', 'stivali', 'sandali', 'tacchi', 'mocassini', 'ballerine',
-        'borsa', 'borse', 'zaino', 'valigia', 'portafoglio', 'cintura', 'sciarpa', 'cappello',
-        'berretto', 'guanti', 'occhiali', 'gioielli', 'anelli', 'collana', 'orecchini', 'bracciale',
-        
-        # Stili e occasioni
-        'moda', 'stile', 'look', 'outfit', 'casual', 'elegante', 'formale', 'sportivo',
-        'trendy', 'vintage', 'boho', 'chic', 'street', 'business', 'serata', 'matrimonio',
-        'ufficio', 'aperitivo', 'cena', 'festa', 'viaggio', 'palestra', 'università',
-        
-        # Caratteristiche
-        'colore', 'colori', 'taglia', 'taglie', 'tessuto', 'cotone', 'lana', 'seta', 'lino',
-        'denim', 'pelle', 'sintetico', 'vestibilità', 'fit', 'comfort', 'qualità',
-        'marca', 'brand', 'prezzo', 'budget', 'shopping', 'acquisto', 'comprare',
-        
-        # Stagioni e tendenze
-        'primavera', 'estate', 'autunno', 'inverno', 'stagione', 'tendenza', 'tendenze',
-        'trend', 'fashion', 'sfilata', 'collezione', 'novità', 'must-have',
-        
-        # Negozio
-        'negozio', 'shop', 'miku', 'consiglio', 'consigli', 'suggerimento', 'abbinamento'
-    ]
-    
-    text_lower = text.lower()
-    
-    # Conta quante parole di moda sono presenti
-    fashion_count = sum(1 for keyword in fashion_keywords if keyword in text_lower)
-    
-    # Se ci sono almeno 2 parole di moda, consideralo appropriato
-    if fashion_count >= 2:
-        return True
-    
-    # Controllo aggiuntivo per frasi che indicano argomenti non di moda
-    off_topic_indicators = [
-        'politica', 'economia', 'scienza', 'medicina', 'tecnologia', 'programmazione',
-        'sport', 'calcio', 'cinema', 'musica', 'cucina', 'ricetta', 'viaggio',
-        'storia', 'geografia', 'matematica', 'fisica', 'chimica', 'biologia',
-        'religione', 'filosofia', 'letteratura', 'arte', 'pittura', 'scultura'
-    ]
-    
-    for indicator in off_topic_indicators:
-        if indicator in text_lower:
-            return False
-    
-    # Se non ci sono indicatori off-topic e c'è almeno 1 parola di moda, accetta
-    return fashion_count >= 1
-
 def consiglia(prompt, image_data=None):
     """Funzione principale che prova diverse API in ordine di priorità"""
     
@@ -261,10 +206,6 @@ def consiglia(prompt, image_data=None):
         
         # Se non funziona con immagine, ritorna messaggio di errore
         return "Mi dispiace, al momento non riesco ad analizzare immagini. Prova a descrivermi il capo di abbigliamento a parole!"
-    
-    # Prima controlla se la domanda stessa è relativa alla moda
-    if not is_fashion_related(prompt):
-        return "Mi dispiace, sono specializzata solo in consigli di moda e abbigliamento. Puoi chiedermi qualcosa sui vestiti, accessori, stili o outfit? Sono qui per aiutarti con il tuo look!"
     
     # 1. Prova GitHub token con servizi compatibili
     try:
