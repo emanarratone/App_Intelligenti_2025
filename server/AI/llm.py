@@ -281,11 +281,25 @@ def consiglia_con_immagine(prompt, image_base64, api_key):
         return None
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Miku AI Assistant')
-    parser.add_argument('prompt', help='Il prompt di input')
-    parser.add_argument('--image', help='Immagine in base64', default=None)
+    # Controlla se c'è input da stdin
+    if not sys.stdin.isatty():
+        # Leggi i dati da stdin (formato JSON)
+        try:
+            input_data = json.loads(sys.stdin.read())
+            prompt = input_data.get('prompt', '')
+            image_data = input_data.get('image', None)
+        except:
+            prompt = sys.stdin.read().strip()
+            image_data = None
+    else:
+        # Usa argparse per argomenti da riga di comando
+        parser = argparse.ArgumentParser(description='Miku AI Assistant')
+        parser.add_argument('prompt', help='Il prompt di input')
+        parser.add_argument('--image', help='Immagine in base64', default=None)
+        
+        args = parser.parse_args()
+        prompt = args.prompt
+        image_data = args.image
     
-    args = parser.parse_args()
-    
-    risposta = consiglia(args.prompt, args.image)
+    risposta = consiglia(prompt, image_data)
     print(risposta)
