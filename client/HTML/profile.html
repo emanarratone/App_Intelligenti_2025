@@ -3,79 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profilo Utente</title>
-    <link rel="stylesheet" href="../css/profile-html-style.css">
-    <link rel="stylesheet" href="../css/modal-confirmation.css">
-    <link rel="icon" href="../images/svg/profile-icon.svg" type="image/svg+xml" style="color: white">
+    <title>Profilo Utente - AI Agent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 50px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
 
+        h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .btn {
+            border-radius: 10px;
+            font-weight: 500;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+        }
+
+        .preferences-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .preference-item {
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav>
-    <!--<a href="/dashboard">Home</a>-->
-    <a href="/" id="home-link-profile">Home</a>
-    <a href="#" id="editProfileLink">Modifica dati</a>
-    <a href="/" id="logout-link" >Logout</a>
-</nav>
+<div class="profile-container">
+    <div class="text-center mb-4">
+        <h1><i class="bi bi-person-circle"></i> Profilo Utente</h1>
+    </div>
 
-    <!-- Contenitore del profilo utente -->
-    <div class="container">
-        <!-- Immagine del profilo -->
+    <!-- Loading indicator -->
+    <div class="text-center d-none" id="loadingIndicator">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Caricamento...</span>
+        </div>
+        <p class="mt-2 text-muted">Caricamento profilo...</p>
+    </div>
 
-        <div class="container-fluid" id="banner-container">
-            <div class="mx-0" id="profile-Pic-container">
-                <img src="../images/svg/login-icon.svg"
-                     onerror="this.style.display='none'"
-                     class="profile-icon"
-                     id="profilePic">
-                <!-- Input file nascosto -->
-                <input type="file" id="fileInput" accept="image/*" style="display: none;">
-
+    <!-- Profilo utente -->
+    <div id="profileContent" class="d-none">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" readonly>
+            </div>
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" readonly>
             </div>
         </div>
 
-        <!-- Form con dati dell'utente -->
-        <form id="profileForm">
-            <!-- Username -->
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="Guest" required readonly>
+        <div class="preferences-section">
+            <h5><i class="bi bi-palette"></i> Le tue preferenze</h5>
+            
+            <div class="preference-item">
+                <strong>Colori preferiti:</strong>
+                <div id="userColors" class="mt-2"></div>
+            </div>
+            
+            <div class="preference-item">
+                <strong>Stile preferito:</strong>
+                <div id="userStyle" class="mt-2"></div>
+            </div>
+            
+            <div class="preference-item">
+                <strong>Interessi:</strong>
+                <div id="userInterests" class="mt-2"></div>
+            </div>
+        </div>
 
-            <!-- Email -->
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="guest@example.com" readonly required>
-
-            <label for="name-label">Name</label>
-            <input type="text" id="name-label" name="name" value="" required readonly>
-
-            <label for="surname-label">Surname</label>
-            <input type="text" id="surname-label" name="surname" value="" required readonly>
-
-
-            <label for="BirthDay-label">Date of birth</label>
-            <input type="date" class="form-control" id="BirthDay-label" required value="" readonly>
-
-            </form>
-    </div>
-
-<div id="loginModalConfirmation" class="custom-modal">
-    <div class="custom-modal-dialog">
-        <div class="custom-modal-content">
-            <span class="close-btn" ></span>
-            <div id="modal-body">
-                <!-- Login form will be injected here -->
-                <!--<div id="button-save-container">
-                     Bottone di Logout
-                    <button type="button" id="logoutBtn">Save</button>
-                </div>-->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <button class="btn btn-primary w-100" onclick="goToChat()">
+                    <i class="bi bi-chat-dots"></i> Vai alla Chat
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-outline-danger w-100" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- Errore -->
+    <div id="errorMessage" class="alert alert-danger d-none">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span id="errorText"></span>
+    </div>
 </div>
 
+<script>
+// Carica le informazioni del profilo
+async function loadProfile() {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const profileContent = document.getElementById('profileContent');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    loadingIndicator.classList.remove('d-none');
+    
+    try {
+        const response = await fetch('/auth/profile');
+        
+        if (response.ok) {
+            const userData = await response.json();
+            
+            // Popola i campi
+            document.getElementById('username').value = userData.username || '';
+            document.getElementById('email').value = userData.email || '';
+            
+            // Mostra le preferenze
+            if (userData.preferences) {
+                showPreferences(userData.preferences);
+            }
+            
+            profileContent.classList.remove('d-none');
+        } else {
+            throw new Error('Utente non autenticato');
+        }
+    } catch (error) {
+        console.error('Errore caricamento profilo:', error);
+        showError('Errore nel caricamento del profilo. Effettua il login.');
+    } finally {
+        loadingIndicator.classList.add('d-none');
+    }
+}
 
-<script type="module" src="../js/ProfilePageController.js"></script>
+function showPreferences(preferences) {
+    // Colori
+    const colorsDiv = document.getElementById('userColors');
+    if (preferences.colori && preferences.colori.length > 0) {
+        colorsDiv.innerHTML = preferences.colori.map(color => 
+            `<span class="badge bg-primary">${color}</span>`
+        ).join('');
+    } else {
+        colorsDiv.innerHTML = '<span class="text-muted">Nessun colore specificato</span>';
+    }
+    
+    // Stile
+    const styleDiv = document.getElementById('userStyle');
+    if (preferences.stile) {
+        styleDiv.innerHTML = `<span class="badge bg-success">${preferences.stile}</span>`;
+    } else {
+        styleDiv.innerHTML = '<span class="text-muted">Nessuno stile specificato</span>';
+    }
+    
+    // Interessi
+    const interestsDiv = document.getElementById('userInterests');
+    if (preferences.interessi && preferences.interessi.length > 0) {
+        interestsDiv.innerHTML = preferences.interessi.map(interest => 
+            `<span class="badge bg-info">${interest}</span>`
+        ).join('');
+    } else {
+        interestsDiv.innerHTML = '<span class="text-muted">Nessun interesse specificato</span>';
+    }
+}
+
+function showError(message) {
+    document.getElementById('errorText').textContent = message;
+    document.getElementById('errorMessage').classList.remove('d-none');
+}
+
+function goToChat() {
+    window.location.href = 'AI-page.html';
+}
+
+async function logout() {
+    if (confirm('Sei sicuro di voler effettuare il logout?')) {
+        try {
+            const response = await fetch('/auth/logout', {
+                method: 'POST'
+            });
+            
+            if (response.ok) {
+                window.location.href = 'login.html';
+            } else {
+                alert('Errore durante il logout');
+            }
+        } catch (error) {
+            console.error('Errore durante il logout:', error);
+            alert('Errore durante il logout');
+        }
+    }
+}
+
+// Carica il profilo all'avvio
+window.addEventListener('DOMContentLoaded', loadProfile);
+</script>
+
 </body>
 </html>

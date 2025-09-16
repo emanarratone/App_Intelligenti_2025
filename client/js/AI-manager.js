@@ -1,30 +1,45 @@
 
-export async function writeAnswerAgent(input, imageData = null) {
-    try {
-        const requestBody = { prompt: input };
-        
-        // Se c'è un'immagine, aggiungila al corpo della richiesta
-        if (imageData) {
-            requestBody.image = imageData;
+export class AIManager {
+    
+    static async sendMessage(messages, sessionId, imageData = null) {
+        try {
+            console.log('Invio messaggi al server AI:', messages, 'Sessione:', sessionId);
+            if (imageData) {
+                console.log('Includendo immagine nella richiesta');
+            }
+            
+            // Prepara i dati da inviare
+            const requestData = {
+                messages: messages,
+                sessionId: sessionId
+            };
+            
+            // Aggiungi l'immagine se presente
+            if (imageData) {
+                requestData.image = imageData;
+            }
+            
+            // Invia la richiesta POST al server
+            const response = await fetch('/ai/llm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Errore HTTP: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Risposta ricevuta dal server:', data);
+            
+            return data;
+            
+        } catch (error) {
+            console.error('Errore nell\'AIManager:', error);
+            throw error;
         }
-
-        const response = await fetch('/ai/llm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify(requestBody) 
-        });
-
-        if (response.ok) {
-            return await response.json();
-        } else {
-            console.error("Errore nella risposta:", response.status);
-            return { risposta: "Errore di comunicazione con il server." };
-        }
-    } catch (err) {
-        console.error("Errore nella richiesta:", err);
-        return { risposta: "Errore di rete. Riprova più tardi." };
     }
 }

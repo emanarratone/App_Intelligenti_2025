@@ -1,55 +1,62 @@
-"use strict"
-//daje
-// require
 const express = require('express');
 const morgan = require('morgan');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy; // username and password for login
+const multer = require('multer');
+const path = require('path');
 const session = require('express-session');
-const path = require("path");
-const UserDAO = require('./server/database/users-dao.js');
+const database = require('./server/database/db');
 
+// Importa le route
+const aiRoutes = require('./server/routes/AI-route');
+const authRoutes = require('./server/routes/auth-route');
 
-// init
-const app = express()
-const port = 3300
-app.use(morgan('tiny'));
-app.use(express.json({ limit: '10mb' })); // Aumentato limite per immagini
-app.use(express.urlencoded({ limit: '10mb', extended: true })); // Anche per form data
-app.use(express.static(path.join(__dirname,'client')));
+// Crea l'applicazione Express
+const app = express();
 
+// Inizializza il database
+database.init().then(() => {
+    console.log('Database inizializzato correttamente');
+}).catch(err => {
+    console.error('Errore inizializzazione database:', err);
+});
 
-/**
- * controllo della sessione
- */
+// Configurazione delle sessioni
 app.use(session({
-    secret: 'super-secret-key',
+    secret: 'ai-agent-secret-key-2025',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        maxAge: 30 * 60 * 1000,
+    cookie: { 
         secure: false,
-        httpOnly: true,
-        sameSite: 'Lax'
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
-// Inizializza Passport e la gestione della sessione
-app.use(passport.initialize());
-app.use(passport.session());
 
-// Configura il parsing del JSON
-app.use(express.json());
+// Middleware
+app.use(morgan('combined'));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-/**
- * Inizializzazione di tutte le routes
- * @type {Router | {}}
- */
-const apiRoutes = require('./server/routes/api.js');
-const userRoutes = require('./server/routes/users-route.js');
-const cartRoutes = require('./server/routes/cart-routes.js');
-const ordineRoutes = require('./server/routes/ordine-route.js');
-const spedizioneRoutes = require('./server/routes/luogoSpedizione-route.js');
-const aiRoutes = require('./server/routes/AI-route.js')
+// Configurazione multer per upload file
+const upload = multer({
+    limits: { fileSize: 10 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Solo file immagine sono ammessi'), false);
+        }
+    }
+});
 
+app.use(upload.any());
 
-module.exports = {app, port, passport, apiRoutes, userRoutes, cartRoutes, ordineRoutes, spedizioneRoutes, aiRoutes};
+// Servire file statici
+app.use(express.static(path.join(__dirname, 'client')));
+app.use('/css', express.static(path.join(__dirname, 'client/css')));
+app.use('/js', express.static(path.join(__dirname, 'client/js')));
+app.use('/images', express.static(path.join(__dirname, 'client/images')));
+
+// Route principali
+app.use('/ai', aiRoutes);
+app.use('/auth', authRoutes);
+
+module.exports = app;

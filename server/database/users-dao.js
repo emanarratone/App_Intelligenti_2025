@@ -1,136 +1,221 @@
-"use strict";
-const db = require("./db");
-const fs = require('fs');
-const {compare} = require("bcrypt");
+const bcrypt = require('bcrypt');
+const database = require('./db');
 
-const UserDAO = {
-    getUser: (username, password, callback) => {
-        const query = 'SELECT username, password FROM utente WHERE username = ? AND password = ?';
-        db.get(query, [username, password], (err, row) => {
-            if (err) {
-                console.error("Errore nella query del database:", err);  // Log dell'errore SQL
-                return callback(err, null);
-            }
-            callback(null, row);  // `row` sarà null se non c'è corrispondenza
-        });
-    },
-
-    insertNewUser: (nome, cognome, email, birthDay, password, username, callback) => {
-        const query = 'INSERT INTO utente (nome, cognome, username, email, password, birthDay) VALUES (?, ?, ?, ?, ?, ?)';
-        db.run(query, [nome, cognome, username, email, password, birthDay], function (err) {
-            if (err) {
-                console.error("Errore durante l'inserimento dell'utente:", err);  // Log dell'errore SQL
-                return callback(err);
-            }
-            callback(null, {id: this.lastID});  // Restituisce l'ID dell'utente appena creato
-        });
-    },
-
-    /**
-     * funzione dao per inserire la pfp
-     * @param email
-     * @param profilepicBuffer
-     * @param callback
-     */
-    insertOrUpdatePfp: (email, profilepicBuffer, callback) => {
-        const query = `
-        INSERT INTO profilepic (email, image)
-        VALUES (?, ?)
-        ON CONFLICT(email) DO UPDATE SET image = ?`;
-        db.run(query, [email, profilepicBuffer, profilepicBuffer], function (err) {
-            if (err) {
-                console.error("Errore durante l'inserimento o l'aggiornamento dell'immagine profilo:", err);
-                return callback(err);
-            }
-            callback(null, { id: this.lastID });
-        });
-    },
-
-    /**
-     * funzione dao per ottenere pfp
-     * @param email
-     * @returns {Promise<unknown>}
-     */
-    getPfp: (email) => {
+class UsersDAO {
+    
+    static async createUser(username, password, email, preferences = {}) {
+        const db = database.getDb();
         return new Promise((resolve, reject) => {
-            const query = `SELECT image FROM profilepic WHERE email = ?`;
+            bcrypt.hash(password, 10, (err, hashedPassword) => {
+                if (err) {
+                    return reject(err);
+                }
+                
+                const query = `INSERT INTO users (username, password, email, preferences, created_at) VALUES (?, ?, ?, ?, datetime('now'))`;
+                const preferencesJson = JSON.stringify(preferences);
+                
+                db.run(query, [username, hashedPassword, email, preferencesJson], function(err) {
+                    if (err) {
+                        return reject(err);
+                    }
+                    
+                    resolve({
+                        id: this.lastID,
+                        username,
+                        email,
+                        preferences
+                    });
+                });
+            });
+        });
+    }
+    
+    static async authenticateUser(username, password) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT * FROM users WHERE username = ?';
+            
+            db.get(query, [username], (err, user) => {
+                if (err) {
+                    return reject(err);
+                }
+                
+                if (!user) {
+                    return resolve(null);
+                }
+                
+                bcrypt.compare(password, user.password, (err, isValid) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    
+                    if (isValid) {
+                        const { password, ...userWithoutPassword } = user;
+                        resolve(userWithoutPassword);
+                    } else {
+                        resolve(null);
+                    }
+                });
+            });
+        });
+    }
+    
+    static async getUserById(userId) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT * FROM users WHERE id = ?';
+            
+            db.get(query, [userId], (err, user) => {
+                if (err) {
+                    return reject(err);
+                }
+                
+                if (user) {
+                    const { password, ...userWithoutPassword } = user;
+                    resolve(userWithoutPassword);
+                } else {
+                    resolve(null);
+                }
+            });
+        });
+    }
+    
+    static async saveChatMessage(userId, sessionId, message) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = `INSERT INTO chat_history (user_id, session_id, message, timestamp) VALUES (?, ?, ?, datetime('now'))`;
+            
+            db.run(query, [userId, sessionId, message], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                
+                resolve({
+                    id: this.lastID,
+                    user_id: userId,
+                    session_id: sessionId,
+                    message,
+                    timestamp: new Date().toISOString()
+                });
+            });
+        });
+    }
+    
+    static async getChatHistory(userId, limit = 50) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM chat_history WHERE user_id = ? ORDER BY timestamp ASC LIMIT ?`;
+            
+            db.all(query, [userId, limit], (err, rows) => {
+                if (err) {
+                    return reject(err);
+                }
+                
+                resolve(rows || []);
+            });
+        });
+    }
+    
+    static async clearChatHistory(userId) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = 'DELETE FROM chat_history WHERE user_id = ?';
+            
+            db.run(query, [userId], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                
+                resolve(true);
+            });
+        });
+    }
+    
+    // Metodi per gestire le sessioni di chat
+    static async getChatSessions(userId) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = `
+                SELECT DISTINCT session_id, 
+                       MIN(timestamp) as start_time,
+                       MAX(timestamp) as last_message_time,
+                       COUNT(*) as message_count
+                FROM chat_history 
+                WHERE user_id = ? 
+                GROUP BY session_id 
+                ORDER BY last_message_time DESC
+            `;
+            
+            db.all(query, [userId], (err, sessions) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(sessions || []);
+            });
+        });
+    }
+    
+    static async getChatSessionMessages(userId, sessionId) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = `
+                SELECT * FROM chat_history 
+                WHERE user_id = ? AND session_id = ? 
+                ORDER BY timestamp ASC
+            `;
+            
+            db.all(query, [userId, sessionId], (err, messages) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(messages || []);
+            });
+        });
+    }
+    
+    static async deleteSession(userId, sessionId) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = 'DELETE FROM chat_history WHERE user_id = ? AND session_id = ?';
+            
+            db.run(query, [userId, sessionId], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve({ deletedCount: this.changes });
+            });
+        });
+    }
+    
+    static async usernameExists(username) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT COUNT(*) as count FROM users WHERE username = ?';
+            
+            db.get(query, [username], (err, row) => {
+                if (err) {
+                    return reject(err);
+                }
+                
+                resolve(row.count > 0);
+            });
+        });
+    }
+    
+    static async emailExists(email) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT COUNT(*) as count FROM users WHERE email = ?';
+            
             db.get(query, [email], (err, row) => {
                 if (err) {
                     return reject(err);
                 }
-                if (row && row.image) {
-                    const base64Image = Buffer.from(row.image).toString('base64');
-                    resolve({ email, image: base64Image });
-                } else {
-                    resolve(null); // Nessuna immagine trovata
-                }
-            });
-        });
-    },
-
-
-    updateUserData: (nome, cognome, username, email, birthDay, callback) => {
-        const query = `
-        UPDATE utente
-        SET nome = ?, cognome = ?, username = ?, birthDay = ?
-        WHERE email = ?`;
-        db.run(query, [nome, cognome, username, birthDay, email], function (err) {
-            if (err) {
-                console.error("Errore durante l'aggiornamento dell'utente:", err);  // Log dell'errore SQL
-                return callback(err);
-            }
-            callback(null, { message: 'User data updated successfully' });  // Optional success message
-        });
-    },
-
-    getUserByUsername: (username) => {
-        return new Promise((resolve, reject) => {
-            const query = `SELECT * FROM utente WHERE username = ?`
-            db.get(query, [username], (err, row) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(row);
-            });
-        });
-    },
-
-    // Aggiungi questa nuova funzione al tuo users-dao.js
-    updateUserPassword: async (userId, hashedPassword) => {
-        try {
-            await db.run(
-                'UPDATE users SET password = ? WHERE id = ?',
-                [hashedPassword, userId]
-            );
-            return { success: true };
-        } catch (err) {
-            console.error('Errore nell\'aggiornamento della password:', err);
-            throw new Error('Errore nell\'aggiornamento della password nel database');
-        }
-    },
-
-    getUserPassword: (username, password, callback) => {
-        const query = 'SELECT password FROM utente WHERE username = ?';
-        db.get(query, [username], (err, row) => {
-            if (err) {
-                console.error("Database query error:", err);  // Log the SQL error
-                return callback(err, null);
-            }
-
-            if (!row) {
-                return callback(null, false);  // No user found
-            }
-
-            // Compare the provided password with the hashed password in the database
-            compare(password, row.password, (err, isMatch) => {
-                if (err) {
-                    console.error("Error comparing passwords:", err);
-                    return callback(err, null);
-                }
-                callback(null, isMatch);  // Return true if passwords match, otherwise false
+                
+                resolve(row.count > 0);
             });
         });
     }
-};
+}
 
-module.exports = UserDAO;
+module.exports = UsersDAO;
