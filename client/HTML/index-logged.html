@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/nav-sytle.css">
+    <link rel="stylesheet" href="../css/button-wish.css">
+    <link rel="stylesheet" href="../css/clothes-images.css">
+    <link rel="stylesheet" href="../css/button-buy.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/button-counter-page.css">
+    <link rel="icon" href="../images/svg/tab-icon.svg" type="image/svg+xml">
+    <title>Miku's web site</title>
+</head>
+<body style="background-color: bisque;">
+<nav class="navbar navbar-expand-lg custom-navbar-bg">
+    <div class="container-fluid" id="banner-container">
+        <img src="../images/svg/shop-icon.svg" id="shop-icon" class="cart-icon" alt="cart">
+        <a class="navbar-brand d-flex justify-content-start" href="#" aria-posinset="ml-auto">Miku's Shop</a>
+        <div class="mx-0" id="profile-Pic">
+            <label id="label-nome-utente"></label>
+            <img src="../images/svg/login-icon.svg" onerror="this.style.display='none'" class="profile-icon">
+        </div>
+    </div>
+</nav>
+<div id="menu-container"></div> <!-- Container for the menu -->
+<main class="container mt-4">
+    <div class="row" id="product-list">
+        <!-- I prodotti saranno inseriti qui -->
+    </div>
+    <div id="pagination-container">
+
+    </div>
+</main>
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Product Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="Product Image" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Immagine in basso a destra con popup su hover -->
+<div class="mx-0" id="ai">
+    <img src="../images/svg/AI.svg" 
+         onerror="this.style.display='none'" 
+         class="ai-icon" 
+         alt="AI Assistant"
+         id="ai-icon-clickable"> <!-- ← ID aggiunto -->
+    <div class="ai-popup">Serve aiuto?</div>
+</div>
+
+
+
+
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<script>
+    // Assicurati che questo script venga eseguito dopo il caricamento della pagina
+    document.addEventListener('DOMContentLoaded', () => {
+        // Effettua una chiamata API per ottenere i dettagli dell'utente
+        fetch('/api/user')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nel recupero dei dati dell\'utente');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Aggiorna l'etichetta con il nome utente
+                const labelNomeUtente = document.getElementById('label-nome-utente');
+                labelNomeUtente.textContent = data.username;  // Imposta il nome utente
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                const labelNomeUtente = document.getElementById('label-nome-utente');
+                labelNomeUtente.textContent = 'Guest';  // Valore di default in caso di errore
+            });
+    });
+</script>
+<script type="module" src="../main.js"></script>
+</body>
+</html>

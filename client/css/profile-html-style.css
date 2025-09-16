@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: bisque;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav {
+    width: 100%;
+    background-color: darkred;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.2em;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: left;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: indianred;
+}
+#profile-Pic-container{
+    position: relative;
+    padding: 10px;
+}
+/* Stile generale per i campi input */
+input[readonly] {
+    background-color: #f2f2f2; /* Colore per i campi non modificabili */
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Transizione per l'animazione */
+}
+
+
+input.editable {
+    background-color: #fff;
+    border-color: black;
+    box-shadow: 0 0 10px rgba(43, 255, 0, 0.5);
+}
+
+/* Aggiungi una piccola animazione per evidenziare */
+@keyframes highlightEditable {
+    0% {
+        background-color: #fff3cd;
+        border-color: black;
+    }
+    100% {
+        background-color: #fff;
+        border-color: black;
+    }
+}
+
+input.editable {
+    animation: highlightEditable 0.5s forwards; /* Applica l'animazione una volta */
+}
+
+#banner-container{
+    background: darkred;
+}
+
+
+#profilePic {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    object-fit: cover;
+}
+
+#profilePic:hover {
+    transform: scale(1.1); /* Ingrandisce leggermente l'immagine */
+    opacity: 0.8;         /* Riduce leggermente l'opacità */
+    cursor: pointer;      /* Cambia il cursore in una mano */
+}
+

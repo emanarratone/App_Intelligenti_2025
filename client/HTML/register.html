@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../images/svg/AI.svg">
+    <title>Registrazione - AI Agent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .main-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn {
+            border-radius: 10px;
+            font-weight: 500;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .preferences-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #e9ecef;
+        }
+
+        .form-check-input:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: #333;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <h1 class="main-title">🤖 Registrazione AI Agent</h1>
+    <p class="text-center text-muted mb-4">Crea il tuo account personalizzato</p>
+
+    <form id="registerForm">
+        <!-- Dati di base -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" required minlength="3" maxlength="20">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required minlength="6">
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Conferma Password</label>
+            <input type="password" class="form-control" id="confirmPassword" required>
+        </div>
+
+        <!-- Sezione Preferenze -->
+        <div class="preferences-section">
+            <h5 class="mb-3"><i class="bi bi-palette"></i> Le tue preferenze</h5>
+            
+            <!-- Colori preferiti -->
+            <div class="mb-3">
+                <label class="form-label">Colori preferiti:</label>
+                <div class="d-flex flex-wrap" id="colorOptions">
+                    <div class="color-option" data-color="blu" style="background-color: #007bff;" title="Blu"></div>
+                    <div class="color-option" data-color="rosso" style="background-color: #dc3545;" title="Rosso"></div>
+                    <div class="color-option" data-color="verde" style="background-color: #28a745;" title="Verde"></div>
+                    <div class="color-option" data-color="giallo" style="background-color: #ffc107;" title="Giallo"></div>
+                    <div class="color-option" data-color="viola" style="background-color: #6f42c1;" title="Viola"></div>
+                    <div class="color-option" data-color="rosa" style="background-color: #e83e8c;" title="Rosa"></div>
+                    <div class="color-option" data-color="nero" style="background-color: #343a40;" title="Nero"></div>
+                    <div class="color-option" data-color="bianco" style="background-color: #f8f9fa; border-color: #333;" title="Bianco"></div>
+                </div>
+            </div>
+
+            <!-- Stile preferito -->
+            <div class="mb-3">
+                <label class="form-label">Stile preferito:</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="style" id="casual" value="casual">
+                            <label class="form-check-label" for="casual">
+                                👕 Casual
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="style" id="elegante" value="elegante">
+                            <label class="form-check-label" for="elegante">
+                                👔 Elegante
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="style" id="sportivo" value="sportivo">
+                            <label class="form-check-label" for="sportivo">
+                                👟 Sportivo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="style" id="vintage" value="vintage">
+                            <label class="form-check-label" for="vintage">
+                                🕰️ Vintage
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="style" id="moderno" value="moderno">
+                            <label class="form-check-label" for="moderno">
+                                ✨ Moderno
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="style" id="bohemien" value="bohemien">
+                            <label class="form-check-label" for="bohemien">
+                                🌸 Bohémien
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interessi -->
+            <div class="mb-3">
+                <label class="form-label">Interessi:</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="moda" value="moda">
+                            <label class="form-check-label" for="moda">
+                                👗 Moda
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="tecnologia" value="tecnologia">
+                            <label class="form-check-label" for="tecnologia">
+                                💻 Tecnologia
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="viaggi" value="viaggi">
+                            <label class="form-check-label" for="viaggi">
+                                ✈️ Viaggi
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cucina" value="cucina">
+                            <label class="form-check-label" for="cucina">
+                                🍳 Cucina
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sport" value="sport">
+                            <label class="form-check-label" for="sport">
+                                ⚽ Sport
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="arte" value="arte">
+                            <label class="form-check-label" for="arte">
+                                🎨 Arte
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pulsanti -->
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="bi bi-person-plus"></i> Registrati
+            </button>
+            <a href="login.html" class="btn btn-outline-secondary">
+                <i class="bi bi-box-arrow-in-right"></i> Hai già un account? Accedi
+            </a>
+        </div>
+    </form>
+
+    <!-- Loading indicator -->
+    <div class="text-center d-none mt-3" id="loadingIndicator">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 text-muted">Registrazione in corso...</p>
+    </div>
+</div>
+
+<script>
+let selectedColors = [];
+
+// Gestione selezione colori
+document.getElementById('colorOptions').addEventListener('click', function(e) {
+    if (e.target.classList.contains('color-option')) {
+        const color = e.target.dataset.color;
+        
+        if (e.target.classList.contains('selected')) {
+            // Deseleziona
+            e.target.classList.remove('selected');
+            selectedColors = selectedColors.filter(c => c !== color);
+        } else {
+            // Seleziona (max 3 colori)
+            if (selectedColors.length < 3) {
+                e.target.classList.add('selected');
+                selectedColors.push(color);
+            } else {
+                alert('Puoi selezionare massimo 3 colori');
+            }
+        }
+    }
+});
+
+// Gestione form registrazione
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    // Validazioni
+    if (password !== confirmPassword) {
+        alert('Le password non coincidono');
+        return;
+    }
+    
+    if (selectedColors.length === 0) {
+        alert('Seleziona almeno un colore preferito');
+        return;
+    }
+    
+    // Raccogli preferenze
+    const style = document.querySelector('input[name="style"]:checked')?.value || '';
+    const interests = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                           .map(cb => cb.value);
+    
+    const preferences = {
+        colori: selectedColors,
+        stile: style,
+        interessi: interests
+    };
+    
+    // Mostra loading
+    document.getElementById('loadingIndicator').classList.remove('d-none');
+    
+    try {
+        const response = await fetch('/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password,
+                preferences
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('Registrazione completata con successo!');
+            window.location.href = 'login.html';
+        } else {
+            alert(data.error || 'Errore durante la registrazione');
+        }
+        
+    } catch (error) {
+        console.error('Errore:', error);
+        alert('Errore di connessione');
+    } finally {
+        document.getElementById('loadingIndicator').classList.add('d-none');
+    }
+});
+</script>
+</body>
+</html>
