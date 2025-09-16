@@ -78,10 +78,6 @@ Scrivi solo testo naturale semplice. Sii amichevole e utile."""
         stile = user_preferences['stile']
         personalization += f"\n- Stile preferito: {stile}. Suggerisci sempre outfit e capi che rispecchiano questo stile."
     
-    if user_preferences.get('interessi'):
-        interessi = ', '.join(user_preferences['interessi'])
-        personalization += f"\n- Interessi: {interessi}. Considera questi interessi quando suggerisci abbigliamento per specifiche attività o eventi."
-    
     personalization += "\n\nUsa queste informazioni per dare consigli di moda personalizzati e pertinenti per l'utente. Ricorda: parla SOLO di moda, shopping e abbigliamento!"
     
     return base_message + personalization

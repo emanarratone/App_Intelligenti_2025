@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profilo Utente - AI Agent</title>
+    <title>Profilo Utente - Miku 2.0</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -73,7 +73,7 @@
 
 <div class="profile-container">
     <div class="text-center mb-4">
-        <h1><i class="bi bi-person-circle"></i> Profilo Utente</h1>
+        <h1><i class="bi bi-person-circle"></i> Il Tuo Profilo Miku 2.0</h1>
     </div>
 
     <!-- Loading indicator -->
@@ -108,11 +108,6 @@
             <div class="preference-item">
                 <strong>Stile preferito:</strong>
                 <div id="userStyle" class="mt-2"></div>
-            </div>
-            
-            <div class="preference-item">
-                <strong>Interessi:</strong>
-                <div id="userInterests" class="mt-2"></div>
             </div>
         </div>
 
@@ -190,16 +185,6 @@ function showPreferences(preferences) {
         styleDiv.innerHTML = `<span class="badge bg-success">${preferences.stile}</span>`;
     } else {
         styleDiv.innerHTML = '<span class="text-muted">Nessuno stile specificato</span>';
-    }
-    
-    // Interessi
-    const interestsDiv = document.getElementById('userInterests');
-    if (preferences.interessi && preferences.interessi.length > 0) {
-        interestsDiv.innerHTML = preferences.interessi.map(interest => 
-            `<span class="badge bg-info">${interest}</span>`
-        ).join('');
-    } else {
-        interestsDiv.innerHTML = '<span class="text-muted">Nessun interesse specificato</span>';
     }
 }
 

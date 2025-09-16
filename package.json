@@ -1,5 +1,5 @@
 {
-  "name": "ai-agent-intelligente",
+  "name": "miku-2.0",
   "version": "2.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "author": "Emanuele",
   "license": "ISC",
-  "description": "AI Agent intelligente che può rispondere a qualsiasi domanda e analizzare immagini",
+  "description": "Miku 2.0 - Il tuo consulente di moda AI personale. Ricevi consigli di stile, outfit e shopping personalizzati",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^4.19.2",

@@ -30,12 +30,12 @@ class UsersDAO {
         });
     }
     
-    static async authenticateUser(username, password) {
+    static async authenticateUser(usernameOrEmail, password) {
         const db = database.getDb();
         return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM users WHERE username = ?';
+            const query = 'SELECT * FROM users WHERE username = ? OR email = ?';
             
-            db.get(query, [username], (err, user) => {
+            db.get(query, [usernameOrEmail, usernameOrEmail], (err, user) => {
                 if (err) {
                     return reject(err);
                 }
@@ -183,6 +183,22 @@ class UsersDAO {
                     return reject(err);
                 }
                 resolve({ deletedCount: this.changes });
+            });
+        });
+    }
+
+    static async getUserByUsername(usernameOrEmail) {
+        const db = database.getDb();
+        return new Promise((resolve, reject) => {
+            // Cerca per username o email
+            const query = 'SELECT * FROM users WHERE username = ? OR email = ?';
+            
+            db.get(query, [usernameOrEmail, usernameOrEmail], (err, user) => {
+                if (err) {
+                    return reject(err);
+                }
+                
+                resolve(user || null);
             });
         });
     }
