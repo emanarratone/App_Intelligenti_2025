@@ -198,7 +198,7 @@ window.sendMessage = async function() {
     } catch (error) {
         console.error('Errore nell\'invio del messaggio:', error);
         window.chatHistoryManager.addMessageToChat(
-            '❌ Spiacente, si è verificato un errore. Riprova più tardi.',
+            'Spiacente, si è verificato un errore. Riprova più tardi.',
             'ai',
             true
         );

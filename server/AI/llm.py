@@ -9,6 +9,22 @@ import os
 from pathlib import Path
 from urllib.parse import quote
 
+def clean_markdown_formatting(text):
+    """Rimuove automaticamente la formattazione markdown (asterischi) dal testo"""
+    if not text:
+        return text
+    
+    # Rimuove grassetto (**testo**)
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
+    
+    # Rimuove corsivo (*testo*)
+    text = re.sub(r'\*(.*?)\*', r'\1', text)
+    
+    # Rimuove underscore per corsivo (_testo_)
+    text = re.sub(r'_(.*?)_', r'\1', text)
+    
+    return text
+
 def get_api_key():
     """Ottieni il token dal file .env"""
     try:
@@ -61,8 +77,13 @@ Quando fornisci link di ricerca, usa questi formati corretti:
 - ASOS: https://www.asos.com/search/?q=termini+di+ricerca (sostituire spazi con %20)
 - H&M: https://www2.hm.com/it_it/search-results.html?q=termini%20di%20ricerca (sostituire spazi con %20)
 
-IMPORTANTE: Non utilizzare MAI formato Markdown, asterischi, grassetto, corsivo o altri simboli di formattazione. 
-Scrivi solo testo naturale semplice. Sii amichevole e utile."""
+IMPORTANTE: Non utilizzare MAI formato Markdown, asterischi (*), grassetto (**), corsivo (_) o altri simboli di formattazione. 
+Scrivi SEMPRE e SOLO testo naturale semplice e scorrevole, come se stessi parlando in una conversazione normale. 
+Non usare MAI simboli speciali per enfatizzare il testo.
+Esempio SBAGLIATO: "**Stile**: considera..." o "*importante*" 
+Esempio CORRETTO: "Stile: considera..." o "importante"
+Puoi usare elenchi numerati e fornire link, ma evita qualsiasi tipo di enfatizzazione con asterischi.
+Sii amichevole, naturale e utile, ma mantieni sempre un linguaggio semplice."""
     
     if not user_preferences:
         return base_message
@@ -83,48 +104,13 @@ Scrivi solo testo naturale semplice. Sii amichevole e utile."""
     return base_message + personalization
 
 def consiglia_con_copilot(messages, user_preferences=None):
-    """Usa GitHub token per accedere a servizi AI compatibili"""
+    """Usa GitHub Models API direttamente"""
     try:
         api_key = get_api_key()
         if not api_key:
             return None
         
-        # Proviamo prima l'endpoint OpenAI con il token GitHub
-        url = "https://api.openai.com/v1/chat/completions"
-        
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
-        
-        # Costruisci system message personalizzato
-        system_message = create_personalized_system_message(user_preferences)
-        
-        data = {
-            "model": "gpt-3.5-turbo",
-            "messages": [{"role": "system", "content": system_message}] + messages,
-            "max_tokens": 1500,
-            "temperature": 0.7
-        }
-        
-        response = requests.post(url, headers=headers, json=data, timeout=30)
-        
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content'].strip()
-        elif response.status_code == 401:
-            # Token non valido per OpenAI, proviamo endpoint GitHub alternativi
-            return try_github_models(messages, api_key, user_preferences)
-        else:
-            return None
-            
-    except Exception as e:
-        return None
-
-def try_github_models(messages, api_key, user_preferences=None):
-    """Prova endpoint GitHub Models (beta)"""
-    try:
-        # GitHub Models API (beta)
+        # Usa direttamente GitHub Models API
         url = "https://models.inference.ai.azure.com/chat/completions"
         
         headers = {
@@ -132,7 +118,7 @@ def try_github_models(messages, api_key, user_preferences=None):
             "Content-Type": "application/json"
         }
         
-        # Aggiungi il system message personalizzato
+        # Costruisci system message personalizzato
         system_message = create_personalized_system_message(user_preferences)
         
         data = {
@@ -146,12 +132,17 @@ def try_github_models(messages, api_key, user_preferences=None):
         
         if response.status_code == 200:
             result = response.json()
-            return result['choices'][0]['message']['content'].strip()
-        
-    except Exception:
-        pass
-    
-    return None
+            raw_response = result['choices'][0]['message']['content'].strip()
+            # Rimuovi automaticamente gli asterischi
+            cleaned_response = clean_markdown_formatting(raw_response)
+            return cleaned_response
+        else:
+            return None
+            
+    except Exception as e:
+        return None
+
+
 
 def consiglia_fallback(prompt):
     """Genera una risposta di fallback per moda e shopping quando le API esterne non sono disponibili"""
@@ -226,7 +217,10 @@ def consiglia_con_immagine(prompt, image_base64, api_key):
         - Accessori appropriati
         - Suggerimenti per migliorare il look
         - Tendenze di moda
-        Non utilizzare mai formato Markdown, asterischi, grassetto o corsivo. Scrivi solo testo naturale."""
+        
+        IMPORTANTE: Non utilizzare MAI formato Markdown, asterischi (*), grassetto (**), corsivo (_) o altri simboli di formattazione. 
+        Scrivi SEMPRE e SOLO testo naturale semplice e scorrevole, come se stessi parlando in una conversazione normale. 
+        Non usare MAI simboli speciali per enfatizzare il testo."""
         
         payload = {
             "model": "gpt-4o",
@@ -261,9 +255,11 @@ def consiglia_con_immagine(prompt, image_base64, api_key):
         
         if response.status_code == 200:
             result = response.json()
-            content = result['choices'][0]['message']['content']
-            print(f"DEBUG: Risposta ricevuta con successo: {len(content)} caratteri", file=sys.stderr)
-            return content
+            raw_content = result['choices'][0]['message']['content']
+            # Rimuovi automaticamente gli asterischi
+            cleaned_content = clean_markdown_formatting(raw_content)
+            print(f"DEBUG: Risposta ricevuta con successo: {len(cleaned_content)} caratteri", file=sys.stderr)
+            return cleaned_content
         else:
             error_text = response.text
             print(f"DEBUG: Errore API - Status: {response.status_code}, Response: {error_text}", file=sys.stderr)
@@ -274,22 +270,25 @@ def consiglia_con_immagine(prompt, image_base64, api_key):
         return None
 
 def consiglia(messages, user_preferences=None):
-    """Funzione principale che prova diverse API in ordine di priorità"""
+    """Funzione principale che usa solo GitHub Models API"""
     
-    # Ottieni l'ultimo messaggio dell'utente
+    # Ottieni l'ultimo messaggio dell'utente per debug
     last_message = messages[-1]['content'] if messages and len(messages) > 0 else "ciao"
+    print(f"DEBUG: Tentativo di chiamata GitHub Models per messaggio: {last_message}", file=sys.stderr)
     
-    # Tutte le richieste vanno all'IA - rimossa la logica di ricerca prodotti
-    
-    # 1. Prova GitHub token con servizi compatibili
+    # 1. Prova GitHub Models API
     try:
         result = consiglia_con_copilot(messages, user_preferences)
         if result:
+            print(f"DEBUG: Risposta ottenuta da GitHub Models", file=sys.stderr)
             return result
-    except Exception:
-        pass
+        else:
+            print(f"DEBUG: GitHub Models ha restituito None", file=sys.stderr)
+    except Exception as e:
+        print(f"DEBUG: Errore in GitHub Models: {str(e)}", file=sys.stderr)
     
-    # 2. Fallback alla simulazione intelligente usando l'ultimo messaggio
+    # 2. SOLO ora usa il fallback se GitHub Models fallisce
+    print(f"DEBUG: GitHub Models fallito, uso fallback", file=sys.stderr)
     return consiglia_fallback(last_message)
 
 if __name__ == "__main__":
