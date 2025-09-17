@@ -1,73 +1,128 @@
-# progetto_app_intelligenti_2025
+# 👗 Miku 2.0 - Consulente di Moda AI
 
+**Il tuo consulente di moda personale alimentato da intelligenza artificiale**
 
+Miku 2.0 è un'applicazione web innovativa che utilizza l'intelligenza artificiale per fornire consigli di moda personalizzati, suggerimenti di stile e supporto per lo shopping online. Con un'interfaccia user-friendly e tecnologie AI avanzate, Miku 2.0 trasforma il modo in cui scopri e acquisti la moda.
 
-## Getting started
+## ✨ Caratteristiche Principali
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- **Consigli di Moda Personalizzati**: Ricevi suggerimenti di stile basati sulle tue preferenze di colore e stile
+- **Chat AI Intelligente**: Conversa con Miku 2.0 per ottenere consigli su outfit, abbinamenti e shopping
+- **Analisi Immagini**: Carica foto dei tuoi outfit per ricevere feedback e suggerimenti di miglioramento
+- **Ricerca Shopping**: Ottieni link diretti ai migliori siti di e-commerce per i prodotti che cerchi
+- **Profilo Personalizzato**: Salva le tue preferenze di stile e colore per consigli sempre più accurati
+- **Cronologia Chat**: Tieni traccia delle tue conversazioni e consigli ricevuti
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## 🚀 Tecnologie Utilizzate
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+- **Frontend**: HTML5, CSS3, Bootstrap 5, JavaScript ES6+
+- **Backend**: Node.js, Express.js
+- **Database**: SQLite
+- **AI/ML**: GitHub Models API (GPT-4), Azure AI Services
+- **Autenticazione**: Express Session con bcrypt
+- **Deployment**: Docker ready
 
 ```
 cd existing_repo
 git remote add origin https://gitlab.di.unipmn.it/Boli/progetto_app_intelligenti_2025.git
 git branch -M main
 git push -uf origin main
+## 🔧 Installazione
+
+### Prerequisiti
+- Node.js (v14 o superiore)
+- npm o yarn
+- Git
+
+### Installazione Locale
+
+1. **Clona il repository**
+```bash
+git clone https://github.com/emanarratone/App_Intelligenti_2025.git
+cd App_Intelligenti_2025
 ```
 
-## Integrate with your tools
+2. **Installa le dipendenze**
+```bash
+npm install
+```
 
-- [ ] [Set up project integrations](https://gitlab.di.unipmn.it/Boli/progetto_app_intelligenti_2025/-/settings/integrations)
+3. **Configura le variabili d'ambiente**
+Crea un file `.env` nella root del progetto:
+```env
+GITHUB_TOKEN=your_github_token_here
+SESSION_SECRET=your_session_secret_here
+PORT=3000
+```
 
-## Collaborate with your team
+4. **Avvia l'applicazione**
+```bash
+npm start
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+5. **Accedi all'applicazione**
+Apri il browser e vai su `http://localhost:3000`
 
-## Test and Deploy
+## 💫 Come Usare Miku 2.0
 
-Use the built-in continuous integration in GitLab.
+1. **Registrazione**: Crea un account fornendo le tue preferenze di colore e stile
+2. **Chat con Miku**: Inizia una conversazione per ricevere consigli di moda personalizzati  
+3. **Carica Immagini**: Mostra i tuoi outfit per ricevere feedback e suggerimenti
+4. **Esplora Shopping**: Chiedi consigli su dove acquistare specifici capi di abbigliamento
+5. **Gestisci Profilo**: Aggiorna le tue preferenze per consigli sempre più accurati
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## 📱 Funzionalità Dettagliate
 
-***
+### Chat AI Avanzata
+- Conversazioni naturali in italiano
+- Memoria delle preferenze utente
+- Consigli personalizzati basati su stile e colori preferiti
+- Supporto per domande su moda, abbigliamenti, accessori e shopping
 
-# Editing this README
+### Analisi Immagini
+- Caricamento di foto outfit
+- Analisi dello stile e dei colori
+- Suggerimenti di miglioramento
+- Consigli per accessori e abbinamenti
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### Sistema di Preferenze
+- Selezione colori preferiti
+- Scelta dello stile personale (Elegante, Casual, Sportivo, Boho, Minimalista, Vintage)
+- Personalizzazione dell'esperienza utente
 
-## Suggestions for a good README
+## 🤝 Contribuire
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Siamo aperti ai contributi! Ecco come puoi aiutare:
 
-## Name
-Choose a self-explaining name for your project.
+1. Fork il progetto
+2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit le tue modifiche (`git commit -m 'Add some AmazingFeature'`)
+4. Push al branch (`git push origin feature/AmazingFeature`)
+5. Apri una Pull Request
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## 📄 Licenza
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Questo progetto è rilasciato sotto la licenza ISC. Vedi il file `LICENSE` per maggiori dettagli.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## 👨‍💻 Autore
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+**Emanuele** - [emanarratone](https://github.com/emanarratone)
 
-## Usage
+## 🙏 Ringraziamenti
+
+- GitHub Models per l'API AI
+- Bootstrap per i componenti UI
+- La community open source per l'ispirazione e il supporto
+
+## 📧 Contatti
+
+Per domande, suggermenti o collaborazioni:
+- GitHub: [emanarratone](https://github.com/emanarratone)
+- Repository: [App_Intelligenti_2025](https://github.com/emanarratone/App_Intelligenti_2025)
+
+---
+
+**Miku 2.0** - Dove la moda incontra l'intelligenza artificiale! 👗✨
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
 ## Support

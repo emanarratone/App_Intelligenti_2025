@@ -9,158 +9,6 @@ import os
 from pathlib import Path
 from urllib.parse import quote
 
-def is_product_search_request(text):
-    """Rileva se l'utente sta cercando un prodotto specifico"""
-    text_lower = text.lower()
-    
-    # Parole chiave che indicano ricerca di prodotti
-    search_keywords = [
-        'cerco', 'dove trovo', 'dove posso comprare', 'dove acquistare', 
-        'dove vendono', 'voglio comprare', 'sto cercando', 'mi serve',
-        'ho bisogno di', 'vorrei', 'consigli per comprare', 'dove compro',
-        'link per', 'sito per comprare', 'shop online', 'acquistare online',
-        'dove posso trovare', 'dove trovare', 'trovare', 'dove si trova',
-        'dove si compra', 'dove si acquista', 'cerca', 'cercare'
-    ]
-    
-    # Tipi di prodotti di moda
-    fashion_items = [
-        'vestito', 'vestiti', 'abito', 'abiti', 'gonna', 'gonne', 'pantaloni', 'jeans',
-        'camicia', 'camicie', 'maglietta', 'magliette', 't-shirt', 'maglia', 'maglione',
-        'giacca', 'giacche', 'giubbotto', 'cappotto', 'felpa', 'felpe', 'hoodie',
-        'scarpe', 'scarpa', 'sandali', 'stivali', 'sneakers', 'tacchi', 'ballerine',
-        'borsa', 'borse', 'zaino', 'zaini', 'valigia', 'trolley',
-        'accessori', 'cintura', 'cinture', 'sciarpa', 'sciarpe', 'cappello', 'cappelli',
-        'occhiali', 'orologio', 'orologi', 'gioielli', 'collana', 'braccialetto',
-        'anello', 'orecchini', 'bikini', 'costume', 'intimo', 'calze', 'calzini'
-    ]
-    
-    # Verifica se il testo contiene parole di ricerca E prodotti di moda
-    has_search_intent = any(keyword in text_lower for keyword in search_keywords)
-    has_fashion_item = any(item in text_lower for item in fashion_items)
-    
-    return has_search_intent and has_fashion_item
-
-def extract_product_details(text):
-    """Estrae dettagli del prodotto dal testo dell'utente"""
-    text_lower = text.lower()
-    
-    # Estrai tipo di prodotto
-    fashion_items = {
-        'vestito': ['vestito', 'vestiti', 'abito', 'abiti'],
-        'gonna': ['gonna', 'gonne'],
-        'pantaloni': ['pantaloni', 'jeans'],
-        'camicia': ['camicia', 'camicie'],
-        'maglietta': ['maglietta', 'magliette', 't-shirt', 'maglia'],
-        'maglione': ['maglione', 'maglioni'],
-        'felpa': ['felpa', 'felpe', 'hoodie'],
-        'giacca': ['giacca', 'giacche', 'giubbotto', 'cappotto'],
-        'scarpe': ['scarpe', 'scarpa', 'sandali', 'stivali', 'sneakers', 'tacchi', 'ballerine'],
-        'borsa': ['borsa', 'borse', 'zaino', 'zaini'],
-        'accessori': ['accessori', 'cintura', 'sciarpa', 'cappello', 'occhiali', 'orologio', 'gioielli']
-    }
-    
-    product_type = None
-    for category, items in fashion_items.items():
-        if any(item in text_lower for item in items):
-            product_type = category
-            break
-    
-    # Estrai colori (incluse le varianti al plurale/femminile)
-    colors = {
-        'nero': ['nero', 'nere', 'neri', 'nera'],
-        'bianco': ['bianco', 'bianche', 'bianchi', 'bianca'],
-        'rosso': ['rosso', 'rosse', 'rossi', 'rossa'],
-        'blu': ['blu', 'azzurro', 'azzurre', 'azzurri', 'azzurra'],
-        'verde': ['verde', 'verdi'],
-        'giallo': ['giallo', 'gialle', 'gialli', 'gialla'],
-        'rosa': ['rosa'],
-        'viola': ['viola'],
-        'marrone': ['marrone', 'marroni'],
-        'grigio': ['grigio', 'grigie', 'grigi', 'grigia'],
-        'arancione': ['arancione', 'arancioni']
-    }
-    
-    color = None
-    for base_color, variants in colors.items():
-        if any(variant in text_lower for variant in variants):
-            color = base_color
-            break
-    
-    # Estrai brand/materiali
-    brands = ['nike', 'adidas', 'zara', 'h&m', 'uniqlo', 'gucci', 'prada', 'armani', 'versace']
-    brand = next((b for b in brands if b in text_lower), None)
-    
-    return {
-        'type': product_type,
-        'color': color,
-        'brand': brand,
-        'query': text
-    }
-
-def search_products_online(product_details):
-    """Cerca prodotti online utilizzando diverse fonti"""
-    try:
-        product_type = product_details.get('type', '')
-        color = product_details.get('color', '')
-        brand = product_details.get('brand', '')
-        
-        # Costruisci query di ricerca
-        search_terms = []
-        if product_type:
-            search_terms.append(product_type)
-        if color:
-            search_terms.append(color)
-        if brand:
-            search_terms.append(brand)
-        
-        search_query = ' '.join(search_terms) if search_terms else 'abbigliamento moda'
-        
-        # Genera link di ricerca per diversi siti di e-commerce
-        results = []
-        
-        # Amazon
-        amazon_query = quote(search_query + ' abbigliamento')
-        amazon_link = f"https://www.amazon.it/s?k={amazon_query}&rh=n%3A1571271031"
-        results.append({
-            'site': 'Amazon',
-            'link': amazon_link,
-            'description': f'Cerca "{search_query}" su Amazon'
-        })
-        
-        # Zalando
-        zalando_query = quote(search_query.replace(' ', '-'))
-        zalando_link = f"https://www.zalando.it/search/?q={quote(search_query)}"
-        results.append({
-            'site': 'Zalando',
-            'link': zalando_link,
-            'description': f'Trova "{search_query}" su Zalando'
-        })
-        
-        # ASOS
-        asos_query = quote(search_query)
-        asos_link = f"https://www.asos.com/search/?q={asos_query}"
-        results.append({
-            'site': 'ASOS',
-            'link': asos_link,
-            'description': f'Scopri "{search_query}" su ASOS'
-        })
-        
-        # H&M
-        hm_query = quote(search_query)
-        hm_link = f"https://www2.hm.com/it_it/search-results.html?q={hm_query}"
-        results.append({
-            'site': 'H&M',
-            'link': hm_link,
-            'description': f'Sfoglia "{search_query}" su H&M'
-        })
-        
-        return results
-        
-    except Exception as e:
-        print(f"DEBUG: Errore nella ricerca prodotti: {str(e)}", file=sys.stderr)
-        return []
-
 def get_api_key():
     """Ottieni il token dal file .env"""
     try:
@@ -197,8 +45,21 @@ def create_personalized_system_message(user_preferences=None):
 - Cura e manutenzione dei vestiti
 - Brand di moda e marchi
 - Occasioni speciali e dress code
+- Ricerca di prodotti specifici e dove acquistarli
 
 Per domande che NON riguardano moda, abbigliamento o shopping, rispondi educatamente che sei specializzato in moda.
+
+Quando l'utente cerca prodotti specifici (es. "cerco una camicia bianca", "dove trovo scarpe nike"), fornisci:
+1. Consigli su cosa cercare e le caratteristiche importanti
+2. Suggerimenti sui migliori siti web per l'acquisto (Amazon, Zalando, ASOS, H&M, ecc.)
+3. Consigli per l'acquisto online (controllo taglie, recensioni, resi)
+4. Link di ricerca diretti quando possibile
+
+Quando fornisci link di ricerca, usa questi formati corretti:
+- Zalando: https://www.zalando.it/catalogo/?q=termini+di+ricerca (sostituire spazi con +)
+- Amazon: https://www.amazon.it/s?k=termini%20di%20ricerca (sostituire spazi con %20)
+- ASOS: https://www.asos.com/search/?q=termini+di+ricerca (sostituire spazi con %20)
+- H&M: https://www2.hm.com/it_it/search-results.html?q=termini%20di%20ricerca (sostituire spazi con %20)
 
 IMPORTANTE: Non utilizzare MAI formato Markdown, asterischi, grassetto, corsivo o altri simboli di formattazione. 
 Scrivi solo testo naturale semplice. Sii amichevole e utile."""
@@ -216,10 +77,6 @@ Scrivi solo testo naturale semplice. Sii amichevole e utile."""
     if user_preferences.get('stile'):
         stile = user_preferences['stile']
         personalization += f"\n- Stile preferito: {stile}. Suggerisci sempre outfit e capi che rispecchiano questo stile."
-    
-    if user_preferences.get('interessi'):
-        interessi = ', '.join(user_preferences['interessi'])
-        personalization += f"\n- Interessi: {interessi}. Considera questi interessi quando suggerisci abbigliamento per specifiche attività o eventi."
     
     personalization += "\n\nUsa queste informazioni per dare consigli di moda personalizzati e pertinenti per l'utente. Ricorda: parla SOLO di moda, shopping e abbigliamento!"
     
@@ -308,7 +165,8 @@ def consiglia_fallback(prompt):
                        'borsa', 'cintura', 'occhiali', 'collana', 'orecchini', 'anello', 'braccialetto',
                        'casual', 'elegante', 'formale', 'trendy', 'vintage', 'moderno', 'classic',
                        'colore', 'nero', 'bianco', 'rosso', 'blu', 'verde', 'giallo', 'grigio', 'marrone',
-                       'brand', 'marca', 'negozio', 'comprare', 'acquistare', 'indossare', 'abbinare']
+                       'brand', 'marca', 'negozio', 'comprare', 'acquistare', 'indossare', 'abbinare',
+                       'cerco', 'cercare', 'dove trovo', 'dove comprare', 'dove acquistare']
     
     # Controlla se la domanda riguarda la moda
     is_fashion_related = any(keyword in prompt_lower for keyword in fashion_keywords)
@@ -320,8 +178,8 @@ def consiglia_fallback(prompt):
     if re.search(r'\b(ciao|salve|buongiorno|buonasera|hey)\b', prompt_lower):
         return "Ciao! Sono il tuo assistente personale per moda e shopping. Posso aiutarti con consigli su outfit, abbinamenti, tendenze di moda e tutto ciò che riguarda l'abbigliamento. Come posso aiutarti oggi?"
     
-    elif re.search(r'\b(outfit|cosa indossare|abbinamento)\b', prompt_lower):
-        return "Per outfit e abbinamenti, posso suggerirti come combinare capi diversi per creare look perfetti. Ad esempio, per un look casual: jeans scuri + maglietta bianca + giacca di jeans + sneakers bianche. Per uno elegante: pantaloni neri + camicia bianca + blazer + scarpe classiche. Che tipo di outfit stai cercando?"
+    elif re.search(r'\b(outfit|cosa indossare|abbinamento|abbino|abbinare|come abbino)\b', prompt_lower):
+        return "Per outfit e abbinamenti, posso suggerirti come combinare capi diversi per creare look perfetti. Una camicia bianca è versatilissima! Puoi abbinarla con: jeans scuri per un look casual, pantaloni eleganti neri o blu per l'ufficio, gonna midi per un outfit femminile, blazer colorato per aggiungere carattere. Per gli accessori: una cintura per definire la vita, scarpe che si adattino all'occasione. Che tipo di look stai cercando?"
     
     elif re.search(r'\b(colore|colori|abbinare colori)\b', prompt_lower):
         return "Per gli abbinamenti di colori, ecco alcuni consigli base: i neutri (nero, bianco, grigio, beige) si abbinano con tutto. Il blu navy sta bene con rosa, bianco e grigio. Il rosso si abbina bene con nero, bianco e denim. Quale colore ti piacerebbe abbinare?"
@@ -332,8 +190,8 @@ def consiglia_fallback(prompt):
     elif re.search(r'\b(accessori|borsa|borsse|gioielli)\b', prompt_lower):
         return "Gli accessori completano l'outfit! Una borsa dovrebbe essere proporzionata alla tua figura e adatta all'occasione. I gioielli aggiungono personalità: per un look minimal, scegli pezzi delicati; per uno bold, osa con statement pieces. Che accessori ti interessano?"
     
-    elif re.search(r'\b(shopping|comprare|acquistare|negozio)\b', prompt_lower):
-        return "Per lo shopping intelligente, ti consiglio di: investire in basic di qualità, scegliere pezzi versatili che si abbinano con più outfit, controllare sempre vestibilità e materiali, e comprare solo ciò che ami davvero. Stai cercando qualcosa di specifico?"
+    elif re.search(r'\b(shopping|comprare|acquistare|negozio|cerco|cercare|dove trovo|dove comprare)\b', prompt_lower):
+        return "Per lo shopping online, ti consiglio questi siti affidabili: Zalando (ottima per moda e resi gratuiti), Amazon (grande varietà e spedizioni veloci), ASOS (stili trendy e giovani), H&M (prezzi accessibili), Zara (moda attuale). Per una ricerca specifica, dimmi cosa stai cercando e ti darò consigli più mirati!"
     
     elif re.search(r'\b(stile|style|tendenza|trend)\b', prompt_lower):
         return "Gli stili principali includono: casual (comodo per tutti i giorni), elegante (per occasioni formali), boho (libero e artistico), minimal (pulito e essenziale), vintage (ispirato al passato). Ogni stile ha le sue caratteristiche. Quale ti rappresenta di più?"
@@ -345,10 +203,10 @@ def consiglia_fallback(prompt):
         return "Per eventi speciali: matrimoni (evita bianco e nero, scegli colori allegri), feste (osa con texture e brillantini), cerimonie (eleganza sobria), aperitivi (smart casual). Dimmi che evento hai e ti aiuto a scegliere l'outfit perfetto!"
     
     elif '?' in prompt:
-        return "Mi dispiace, sono specializzato solo in moda e shopping. Posso aiutarti con consigli su outfit, abbinamenti, tendenze, scarpe, accessori e tutto ciò che riguarda l'abbigliamento. Hai qualche domanda su questi argomenti?"
+        return "Sono qui per aiutarti con tutto ciò che riguarda moda e shopping! Posso consigliarti outfit, abbinamenti, dove comprare prodotti specifici, tendenze di moda e molto altro. Cosa ti piacerebbe sapere?"
     
     else:
-        return "Mi dispiace, sono un assistente specializzato in moda e shopping. Posso aiutarti solo con consigli su outfit, abbigliamento, accessori e tutto ciò che riguarda il mondo della moda. Hai qualche domanda su questi argomenti?"
+        return "Ciao! Sono specializzato in moda e shopping. Posso aiutarti a trovare l'outfit perfetto, consigliarti dove comprare quello che cerchi, suggerire abbinamenti di colori e molto altro. Come posso aiutarti oggi?"
 
 def consiglia_con_immagine(prompt, image_base64, api_key):
     """Analizza un'immagine usando GitHub Models con GPT-4 Vision"""
@@ -421,38 +279,7 @@ def consiglia(messages, user_preferences=None):
     # Ottieni l'ultimo messaggio dell'utente
     last_message = messages[-1]['content'] if messages and len(messages) > 0 else "ciao"
     
-    # Verifica se l'utente sta cercando un prodotto
-    if is_product_search_request(last_message):
-        print(f"DEBUG: Rilevata richiesta di ricerca prodotto: {last_message}", file=sys.stderr)
-        
-        # Estrai dettagli del prodotto
-        product_details = extract_product_details(last_message)
-        print(f"DEBUG: Dettagli prodotto estratti: {product_details}", file=sys.stderr)
-        
-        # Cerca prodotti online
-        search_results = search_products_online(product_details)
-        
-        if search_results:
-            # Crea una risposta con i link di ricerca
-            response = f"Ho trovato alcuni posti dove puoi cercare "
-            if product_details.get('type'):
-                response += f"{product_details['type']}"
-                if product_details.get('color'):
-                    response += f" {product_details['color']}"
-                if product_details.get('brand'):
-                    response += f" {product_details['brand']}"
-            else:
-                response += "quello che stai cercando"
-            
-            response += ":\n\n"
-            
-            for result in search_results:
-                response += f"🛍️ {result['site']}: {result['description']}\n"
-                response += f"👉 {result['link']}\n\n"
-            
-            response += "💡 Ti consiglio di confrontare prezzi e leggere le recensioni prima dell'acquisto. Hai bisogno di altri consigli su come scegliere il prodotto perfetto?"
-            
-            return response
+    # Tutte le richieste vanno all'IA - rimossa la logica di ricerca prodotti
     
     # 1. Prova GitHub token con servizi compatibili
     try:
