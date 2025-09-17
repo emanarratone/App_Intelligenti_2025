@@ -131,88 +131,86 @@ window.logout = async function() {
     }
 };
 
-// Funzione per inviare un messaggio
+
+window.isSending = false;
+
 window.sendMessage = async function() {
-    const userInput = document.getElementById('userInput');
-    const message = userInput.value.trim();
-    
-    // Se c'è un'immagine ma nessun testo, usa un testo predefinito
-    if (!message && currentImageData) {
-        userInput.value = 'Analizza questa immagine e dammi consigli di moda';
-    }
-    
-    const finalMessage = userInput.value.trim();
-    
-    if (!finalMessage && !currentImageData) {
-        alert('Per favore inserisci un messaggio o seleziona un\'immagine');
+    if (window.isSending) {
+        // Se è già in corso un invio, non fare nulla
         return;
     }
-    
+
+    const userInput = document.getElementById('userInput');
+    let message = userInput.value.trim();
+
+    if (!message && currentImageData) {
+        message = 'Analizza questa immagine e dammi consigli di moda';
+    }
+
+    if (!message && !currentImageData) {
+      alert("Inserisci almeno un testo o un'immagine");    
+        return;
+    }
+
+    window.isSending = true;
+
     try {
-        // Determina il tipo di messaggio da mostrare
-        let displayMessage = finalMessage;
+        // Prepara messaggio finale da mostrare in chat
+        let displayMessage = message;
         if (currentImageData) {
-            displayMessage += currentImageData ? ' 📷' : '';
+            displayMessage += ' 📷';
         }
-        
-        // Aggiungi il messaggio utente alla chat usando il nuovo manager
+
+        // Aggiungi messaggio utente alla chat
         window.chatHistoryManager.addMessageToChat(displayMessage, 'user', true);
-        
+
         // Aggiungi alla cronologia locale
-        chatHistory.push({ role: 'user', content: finalMessage });
-        
-        // Pulisci l'input e rimuovi l'immagine
+        chatHistory.push({ role: 'user', content: message });
+
+        // Pulisci input e rimuovi immagine
         userInput.value = '';
-        const imageData = currentImageData; // Salva prima di rimuovere
+        const imageData = currentImageData;
         if (currentImageData) {
             removeImage();
         }
-        
-        // Mostra indicatore di caricamento
+
+        // Mostra caricamento e disabilita bottoni
         showLoadingIndicator(true);
-        
-        // Disabilita i pulsanti durante il caricamento
         toggleButtons(false);
-        
-        // Invia il messaggio all'AI con l'ID sessione e l'immagine
+
+        // Invia il messaggio all'AI
         const sessionId = window.chatHistoryManager.getCurrentSessionId();
         const response = await AIManager.sendMessage(chatHistory, sessionId, imageData);
-        
+
         if (response && response.response) {
-            // Aggiungi la risposta AI alla chat
             window.chatHistoryManager.addMessageToChat(response.response, 'ai', true);
-            
-            // Aggiungi alla cronologia
             chatHistory.push({ role: 'assistant', content: response.response });
-            
-            // Ricarica le sessioni dalla sidebar se l'utente è autenticato
+
             if (window.chatHistoryManager.isAuthenticated) {
                 setTimeout(() => {
                     window.chatHistoryManager.loadChatHistory();
-                }, 500); // Piccolo delay per assicurarsi che il salvataggio sia completato
+                }, 500);
             }
         } else {
             throw new Error('Risposta AI non valida');
         }
-        
+
     } catch (error) {
         console.error('Errore nell\'invio del messaggio:', error);
         window.chatHistoryManager.addMessageToChat(
-            '❌ Spiacente, si è verificato un errore. Riprova più tardi.', 
-            'ai', 
+            '❌ Spiacente, si è verificato un errore. Riprova più tardi.',
+            'ai',
             true
         );
     } finally {
-        // Nascondi indicatore di caricamento
+        // Nascondi caricamento, riabilita bottoni, resetta stato invio e focus input
         showLoadingIndicator(false);
-        
-        // Riabilita i pulsanti
         toggleButtons(true);
-        
-        // Focus sull'input
+        window.isSending = false;
         userInput.focus();
     }
 };
+
 
 // Funzione per resettare la chat
 window.resetChat = function() {
