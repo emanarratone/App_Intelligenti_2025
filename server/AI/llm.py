@@ -28,7 +28,6 @@ def clean_markdown_formatting(text):
 def get_api_key():
     """Ottieni il token dal file .env"""
     try:
-        # Percorso del file .env (due livelli sopra dalla cartella AI)
         env_path = Path(__file__).parent.parent.parent / '.env'
         print(f"DEBUG: Cercando .env in: {env_path}", file=sys.stderr)
         
@@ -36,12 +35,11 @@ def get_api_key():
             with open(env_path, 'r') as f:
                 for line in f:
                     if line.strip().startswith('GITHUB_TOKEN='):
-                        # Rimuovi GITHUB_TOKEN= e eventuali virgolette
                         token = line.strip().split('=', 1)[1]
                         token = token.strip('\'"')
                         return token
         
-        # Fallback: prova GitHub CLI se disponibile
+        # prova GitHub CLI se disponibile
         result = subprocess.run(['gh', 'auth', 'token'], capture_output=True, text=True)
         if result.returncode == 0:
             return result.stdout.strip()
@@ -110,7 +108,7 @@ def consiglia_con_copilot(messages, user_preferences=None):
         if not api_key:
             return None
         
-        # Usa direttamente GitHub Models API
+        # Usa GitHub Models API
         url = "https://models.inference.ai.azure.com/chat/completions"
         
         headers = {
